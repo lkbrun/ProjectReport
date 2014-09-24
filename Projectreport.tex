@@ -1,24 +1,43 @@
 \documentclass[11pt,english,a4paper]{report}
 
+\usepackage[toc,xindy]{glossaries} 
+
 \title{INF226 - Project Report}
 \date{\today}
 \author{Lasse K. Brun and Håvard R. Olsen}
 
+\include{glossary}
+\makeglossaries
 
 \begin{document}
 
 \maketitle
 
+\tableofcontents
+\newpage
+
+% Glossary
+\printglossaries
+\newpage
+
 
 \chapter{Introduction}
-\textit{Here we are talking about the background for the report, why we are writing it and what we hope to accomplice.}
+\textit{This chapter will provide you with some background material for the report, why we are writing it and what we hope to accomplish.}
 
 \section{Motivation}
-In todays software world, security is more important than ever. Every week there is a new threat that needs to be handled. Because of this many tools and frameworks for analysing software have been created. These tools help software developers or security experts find weaknesses or flaws in their applications. We will in this report introduce two of the best tools out there, as well as testing them out on a actual codebase. 
-\paragraph{•}
-The codebase we will be using is dhis2(Short explanation about dhis2). By analysing this codebase we hope that we can uncover potential security holes in the application which we than can come up with solutions for.
+\paragraph{}
+In today's software world, security is more important than ever. New and refined attack methods keep emerging, making creation of secure software applications a full time job. This has caused production of new, innovative tools and frameworks to handle analysis of software. The tools and frameworks help software developers to find security breaches within their application. Throughout this report will the two most common tools be introduced, and tested on an actual codebase.
+
+\paragraph{}
+The codebase we will be using is gls{dhis}. \gls{dhis} is a flexible, web-based open-source information system. The system has visualization features as \gls{gis}, charts and pivot tables. 
+
+\paragraph{}
+The system is very widespread being the preferred health management information system in 46 countries across five continents. The health system helps governments and health organizations to manage their operations more efficiently, monitor processes and improve communication. The system is portable and can capture data on any type of device, including desktops, laptops, tablets and smartphones. 
 
 \section{Goal}
+\paragraph{}
+The goal of this report is to expose security breaches within the provided codebase(\gls{dhis}). This will give us a better understanding of how the analysing tools work and how to use them. Thereafter must an evaluation of the result given by the tools be done. The evaluation will result in a conclusion, centred around a solution to the security flaws. By giving this report to the company responsible for the codebase, will hopefully give them an understanding of the security holes in their application and a solution to how they can solve them.
+
 \chapter{Installation of tools and code base}
 \section{OWASP Zed Attack Proxy}
 \subsection{Installation}
@@ -29,6 +48,8 @@ The codebase we will be using is dhis2(Short explanation about dhis2). By analys
 \section{Code base}
 \subsection{Installation}
 \subsection{Features and benefits}
+
+
 
 \chapter{Static Analysis and Penetration Testing Results}
 \chapter{Analysis, Evaluation and Recommendations}
