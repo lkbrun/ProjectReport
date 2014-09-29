@@ -26,44 +26,90 @@
 
 \section{Motivation}
 \paragraph{}
-In today's software world, security is more important than ever. New and refined attack methods keep emerging, making creation of secure software applications a full time job. This has caused production of new, innovative tools and frameworks to handle analysis of software. The tools and frameworks help software developers to find security breaches within their application. Throughout this report will the two most common tools be introduced, and tested on an actual codebase.
+In today's software world, security is more important than ever. 
+New and refined attack methods keep emerging, making creation of secure software applications a full time job. 
+This has caused production of new, innovative tools and frameworks to handle analysis of software. 
+The tools and frameworks help software developers to find security breaches within their application. 
+Throughout this report will the two most common tools be introduced, and tested on an actual codebase.
 
 \paragraph{}
-The codebase we will be using is gls{dhis}. \gls{dhis} is a flexible, web-based open-source information system. The system has visualization features as \gls{gis}, charts and pivot tables. 
+The codebase we will be using is gls{dhis}. \gls{dhis} is a flexible, web-based open-source information system. 
+The system has visualization features as \gls{gis}, charts and pivot tables. 
 
 \paragraph{}
-The system is very widespread being the preferred health management information system in 46 countries across five continents. The health system helps governments and health organizations to manage their operations more efficiently, monitor processes and improve communication. The system is portable and can capture data on any type of device, including desktops, laptops, tablets and smartphones. 
+The system is very widespread being the preferred health management information system in 46 countries across five continents. 
+The health system helps governments and health organizations to manage their operations more efficiently, monitor processes and improve communication. 
+The system is portable and can capture data on any type of device, including desktops, laptops, tablets and smartphones. 
 
 \section{Goal}
 \paragraph{}
-The goal of this report is to expose security breaches within the provided codebase(\gls{dhis}). This will give us a better understanding of how the analysing tools work and how to use them. Thereafter must an evaluation of the result given by the tools be done. The evaluation will result in a conclusion, centred around a solution to the security flaws. By giving this report to the company responsible for the codebase, will hopefully give them an understanding of the security holes in their application and a solution to how they can solve them.
+The goal of this report is to expose security breaches within the provided codebase(\gls{dhis}). 
+This will give us a better understanding of how the analysing tools work and how to use them. 
+Thereafter must an evaluation of the result given by the tools be done. 
+The evaluation will result in a conclusion, centred around a solution to the security flaws. 
+By giving this report to the company responsible for the codebase, will hopefully give them an understanding of the security holes in their application and a solution to how they can solve them.
 
 \chapter{Installation of tools and code base}
 \textit{Here we talk about the the two tools we are using, and the codebase.}
+
 \section{OWASP Zed Attack Proxy}
-\paragraph{•}
-\gls{zap} is a integrated penetration testing tool used for finding flaws and vulnerabilities in web applications. \gls{zap} is an excellent tool for both beginners and security experts as it provides an easy to use graphical interface as well as a more in-depth command line.
-\paragraph{•}
+\paragraph{}
+\gls{zap} is a integrated penetration testing tool used for finding flaws and vulnerabilities in web applications. 
+\gls{zap} is an excellent tool for both beginners and security experts as it provides an easy to use graphical interface as well as a more in-depth command line.
+
+\paragraph{}
 In this section we will cover some of the features that \gls{zap} provides, and see how we can benefit from them.
+
 \subsection{Installation and Experience}
-The installation process is relatively straight forward as you are guided through an installation wizard. If you only need the basic usage this is all you need to do, but for more advanced usage you need to do some more configuration. This include setting up \gls{zap}s intercepting proxy and running different kinds of scans. The \gls{zap} home page has multiple tutorials and plenty of documentation on how to use different features found in \gls{zap}. We will talk more about some of these features in the next section.
+The installation process is relatively straight forward as you are guided through an installation wizard. 
+If you only need the basic usage this is all you need to do, but for more advanced usage you need to do some more configuration. 
+This include setting up \gls{zap}s intercepting proxy and running different kinds of scans. 
+The \gls{zap} home page has multiple tutorials and plenty of documentation on how to use different features found in \gls{zap}. 
+We will talk more about some of these features in the next section.
+
 \subsection{Features}
 \subsubsection{Intercepting proxy}
-\gls{zap} is really an intercepting proxy which is capable of intercepting requests and responses. This means that you can read the traffic as well as change them. The way you utilize this is by configuring your browser to use \gls{zap} as a proxy. This way you can optimize the analysis by manually testing the application before you run any active scan or spider.
+\gls{zap} is really an intercepting proxy which is capable of intercepting requests and responses.
+This means that you can read the traffic as well as change them.
+The way you utilize this is by configuring your browser to use \gls{zap} as a proxy.
+This way you can optimize the analysis by manually testing the application before you run any active scan or spider.
 \subsubsection{Passive and Active scanner}
 The documentation for \gls{zap} states that you should only use it on applications you have permission from, as you are actually attacking the application. 
-This does not include the passive scanner. This is a tool that will run in the background as you browse the application and all it does is listening to the network traffic and not attacking. 
-\paragraph{•}
-\gls{zap} also includes an active scanner, which unlike the passive scanner will perform various attacks on the application. It is worth noting that the active scanner can only find certain kinds of vulnerabilities. So to get the full use out of \gls{zap} you should do manual penetration testing as well as run the active scan.
+This does not include the passive scanner. 
+This is a tool that will run in the background as you browse the application and all it does is listening to the network traffic and not attacking. 
+
+\paragraph{}
+\gls{zap} also includes an active scanner, which unlike the passive scanner will perform various attacks on the application. 
+It is worth noting that the active scanner can only find certain kinds of vulnerabilities. 
+So to get the full use out of \gls{zap} you should do manual penetration testing as well as run the active scan.
+
 \subsubsection{Spider}
-\gls{zap} comes with a built in spider which crawls the application looking for URLs. It starts of with the initial list, it then visits all URLs on the list and finds the URL resources on each page. The spider doesn't stop until it has visited every hyperlink in the application.
-\paragraph{•}
-The spider will find resources that you may have missed during penetration testing or that has been hidden from you. It is a great tool to make sure that you cover the entire application.
+\gls{zap} comes with a built in spider which crawls the application looking for URLs.
+It starts of with the initial list, it then visits all URLs on the list and finds the URL resources on each page. 
+The spider doesn't stop until it has visited every hyperlink in the application.
+
+\paragraph{}
+The spider will find resources that you may have missed during penetration testing or that has been hidden from you. 
+It is a great tool to make sure that you cover the entire application.
+
 \subsection{Summary}
-\gls{zap} is as said a great tool with many helpful tools, but that doesn't mean that you can rely solely on the automatic scanners it provides. By using \gls{zap} together with manual penetration testing you achieve the best result and the best coverage. Below is a picture of the result of running it on the \gls{dhis} application.
+\paragraph{}
+\gls{zap} is as said a great tool with many helpful tools, but that doesn't mean that you can rely solely on the automatic scanners it provides. 
+By using \gls{zap} together with manual penetration testing you achieve the best result and the best coverage. 
+Below is a picture of the result of running it on the \gls{dhis} application.
+
 INSERT PIC!
+
+
 \section{HP Fortify}
+\paragraph{}
+HP Fortify provides enterprise customers to assess, assure and protect enterprise software and applications from security vulnerabilities.
+
+
 \subsection{Installation and Experience}
+\paragraph{}
+
+
 \subsection{Features and benefits}
 \section{\gls{dhis}}
 \subsection{Installation}
