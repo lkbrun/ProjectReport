@@ -45,22 +45,27 @@ The goal of this report is to expose security breaches within the provided codeb
 \gls{zap} is a integrated penetration testing tool used for finding flaws and vulnerabilities in web applications. \gls{zap} is an excellent tool for both beginners and security experts as it provides an easy to use graphical interface as well as a more in-depth command line.
 \paragraph{•}
 In this section we will cover some of the features that \gls{zap} provides, and see how we can benefit from them.
+\subsection{Installation and Experience}
+The installation process is relatively straight forward as you are guided through an installation wizard. If you only need the basic usage this is all you need to do, but for more advanced usage you need to do some more configuration. This include setting up \gls{zap}s intercepting proxy and running different kinds of scans. The \gls{zap} home page has multiple tutorials and plenty of documentation on how to use different features found in \gls{zap}. We will talk more about some of these features in the next section.
 \subsection{Features}
 \subsubsection{Intercepting proxy}
-(You can configure your browser to proxy through zap) So it can see all requests and responses. You can also intercepts and change them.
+\gls{zap} is really an intercepting proxy which is capable of intercepting requests and responses. This means that you can read the traffic as well as change them. The way you utilize this is by configuring your browser to use \gls{zap} as a proxy. This way you can optimize the analysis by manually testing the application before you run any active scan or spider.
 \subsubsection{Passive and Active scanner}
-The passive scanner: Examines the requests and respo, but can detect problems just based on that. Safe to use on any site as it only listens to traffic, and doesn't do any attacks
-The active scanner: It performs many different attacks on the site.
-
+The documentation for \gls{zap} states that you should only use it on applications you have permission from, as you are actually attacking the application. 
+This does not include the passive scanner. This is a tool that will run in the background as you browse the application and all it does is listening to the network traffic and not attacking. 
+\paragraph{•}
+\gls{zap} also includes an active scanner, which unlike the passive scanner will perform various attacks on the application. It is worth noting that the active scanner can only find certain kinds of vulnerabilities. So to get the full use out of \gls{zap} you should do manual penetration testing as well as run the active scan.
 \subsubsection{Spider}
-The spider crawls the application for example to find pages that you've missed or is hidden.
-\subsubsection{Report Generation}
-Gives detailed information about problems, how to learn more about that class of problems and also how to solve them.
-
+\gls{zap} comes with a built in spider which crawls the application looking for URLs. It starts of with the initial list, it then visits all URLs on the list and finds the URL resources on each page. The spider doesn't stop until it has visited every hyperlink in the application.
+\paragraph{•}
+The spider will find resources that you may have missed during penetration testing or that has been hidden from you. It is a great tool to make sure that you cover the entire application.
+\subsection{Summary}
+\gls{zap} is as said a great tool with many helpful tools, but that doesn't mean that you can rely solely on the automatic scanners it provides. By using \gls{zap} together with manual penetration testing you achieve the best result and the best coverage. Below is a picture of the result of running it on the \gls{dhis} application.
+INSERT PIC!
 \section{HP Fortify}
-\subsection{Installation}
+\subsection{Installation and Experience}
 \subsection{Features and benefits}
-\section{Code base}
+\section{\gls{dhis}}
 \subsection{Installation}
 \subsection{Features and benefits}
 
