@@ -35,7 +35,7 @@ Throughout this report will the two most common tools be introduced, and tested 
 
 \paragraph{}
 The codebase we will be using is gls{dhis}. \gls{dhis} is a flexible, web-based open-source information system. 
-The system has visualization features as \gls{gis}, charts and pivot tables. 
+The system has visualization features as \gls{gis}, charts and pivot tables. \cite{dhis2-homepage}
 
 
 \section{Goal}
@@ -104,33 +104,30 @@ INSERT PIC!
 \paragraph{}
 HP Fortify assess, assure and protect enterprise software and applications from security vulnerabilities.
 Providing complete security testing and management through static and dynamic testing technologies or by repeatable and auditable secure behaviours, over the course of a software application life cycle. 
-A flexible delivery model allows security groups to get started quickly and scale in response to business changes while protecting their assets in application security.  
-
+A flexible delivery model allows security groups to get started quickly and scale in response to business changes while protecting their assets in application security. 
+You can read more about HP Fortify here. \cite{fortify-software-wiki, fortify-software-homepage-features} 
 
 \subsection{Installation and Experience}
 \paragraph{}
 Installing the HP Fortify plug in for eclipse is a straightforward process. 
 First of all, must the HP Fortify software be downloaded and installed.
-\gls{uib} provided access to their \gls{svn} repository where the Fortify static analysis tool could be downloaded.  
+\gls{uib} provided access to their \gls{svn} repository where the HP Fortify software tool could be downloaded.  
 The download includes an installation wizard. 
-The default installation covers our needs for this project, however, you can specify specific configurations throughout the wizard.
+The default installation covers our needs for this project, however, you can specify specific configurations throughout the wizard. \cite{installation-usage-guide}
 
 \paragraph{}
 There exists a HP Fortify plug-in for Eclipse which is easy and convenient to use.
 Eclipse has a feature called install new software, where a wizard will take you through the plug-in installation steps.
 There you have to specify the installation directory of HP Fortify meaning the HP Fortify software you installed in the previous step.
 Here you will have some different configuration settings, for instance what features to install.
-After completion of the installation a simple restart of Eclipse is needed and the menu bar will then include the HP Fortify menu.
-
-\paragraph{}
-
+After completion of the installation a simple restart of Eclipse is needed and the menu bar will then include the HP Fortify menu. \cite{installation-usage-guide}
 
 
 \subsection{Features}
 \paragraph{}
 The plug-in consists of two components: an audit plug-in component and an analysis plug-in component. 
 The audit plug-in makes it possible to open and audit former scan results and audit them. 
-The analysis plug-in enables you to initiate a \gls{sca} scan and analysis, view the result and fix the discovered security flaws.
+The analysis plug-in enables you to initiate a \gls{sca} scan and analysis, view the result and fix the discovered security flaws. \cite{installation-usage-guide}
 
 \subsubsection{HP Fortify \gls{sca}}
 \paragraph{}
@@ -138,7 +135,7 @@ This component makes it possible to initiate a \gls{sca} scan and analysis of yo
 You can scan entire projects or specify a single package or file that you want to scan. 
 Although the plug-in automatically includes all source files from dependencies. 
 A scan can easily be started by selecting the desired project, package or file and start the scan from the HP Fortify menu.
-The result of the scan will be shown in a new tab in Eclipse, called the \gls{sca} Analysis Result view.
+The result of the scan will be shown in a new tab in Eclipse, called the \gls{sca} Analysis Result view. \cite{installation-usage-guide}
 
 \paragraph{}
 The \gls{sca} Analysis Result view provides a way to group and select security issues that you want to audit. 
@@ -146,37 +143,37 @@ Within the view you can set a filter which specifies what issues should be shown
 There are many different ways to show the result.
 You can for instance choose between Security Auditor View, Developer View, Critical Exposure and Hotspot.
 The issues are sorted by severity, and put into folders accordingly such as critical, high, medium and low. 
-When you select an issue, the Analyse Evidence view will be displayed.
+When you select an issue, the Analyse Evidence view will be displayed. \cite{installation-usage-guide}
 
 \paragraph{}
 \label{analyseevidence}
 The Analyse Evidence view presents a justification for why this is an issue.
-The view will give a more detailed reason for why this is an issue, and show the direction of the data flow and how the data flow moves.
+The view will give a more detailed reason for why this is an issue, and show the direction of the data flow and how the data flow moves. \cite{installation-usage-guide}
 
 \paragraph{}
 The Project Summary view displays detailed scan information in diverse tabs.
-For instance, a summary tab displaying high-level information about the project and a build information tab showing build id, number of files scanned, date of scan and more applicable information about the scan and project.
+For instance, a summary tab displaying high-level information about the project and a build information tab showing build id, number of files scanned, date of scan and more applicable information about the scan and project. \cite{installation-usage-guide}
 
 \subsubsection{Auditing Analysis Results}
 \paragraph{}
 This component is responsible for auditing and analysis of the result.
 It is possible to open an existing audit and continue your work.
 You can even open the analysis for a project created by someone else on another machine.
-If necessary, can you generate a new result from the audit.
+If necessary, can you generate a new result from the audit. \cite{installation-usage-guide}
 
 \paragraph{}
 The Analysis Evidence view is mentioned in Section~\ref{analyseevidence}. 
 It is possible to display the Analyse Evidence view here as well which gives a more detailed reason of a particular issue.
 In addition, can you do various of search queries that can contain, be equal/not equal to a text.
 You can use \gls{regex} or search for number range and even more. 
-Finally can you generate a report based on the analysis data that will show the result of analysis.
+Finally can you generate a report based on the analysis data that will show the result of analysis. \cite{installation-usage-guide}
 
 
 \section{\gls{dhis}}
 \paragraph{}
 The system is very widespread being the preferred health management information system in 46 countries across five continents. 
 The health system helps governments and health organizations to manage their operations more efficiently, monitor processes and improve communication. 
-The system is portable and can capture data on any type of device, including desktops, laptops, tablets and smartphones. 
+The system is portable and can capture data on any type of device, including desktops, laptops, tablets and smartphones. \cite{dhis2-homepage, dhis2-wiki}
 
 \subsection{Installation}
 \subsection{Features and benefits}
@@ -185,6 +182,12 @@ The system is portable and can capture data on any type of device, including des
 
 \chapter{Static Analysis and Penetration Testing Results}
 \chapter{Analysis, Evaluation and Recommendations}
+
+\newpage
+
+
+\bibliographystyle{plain}
+\bibliography{biblio}
 
 \end{document}
 
