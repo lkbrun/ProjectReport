@@ -179,7 +179,14 @@ The health system helps governments and health organizations to manage their ope
 The system is portable and can capture data on any type of device, including desktops, laptops, tablets and smartphones. 
 
 \subsection{Installation}
-\subsection{Features and benefits}
+\paragraph{}
+After following the documentation on installing the codebase, found at their homepage we learned that the information there was not sufficient.
+It explains how to use maven to build the different components and how to set up the database connection, but this only took us so far.
+First of all we had to add a new environment variable which expressed the location of the project folder so that the system could find it.
+After this the building was successful, but trying to run the application at this point caused an OutOfMemoryException. 
+This means that the web server didn't have access to enough memory to successfully run the application. 
+We fixed this by adding two more environment variables which specified the allocated memory for the Java runtime environment and for maven.
+After we did this the application ran successfully and we could build the project as an eclipse project and import it into eclipse to further analyse it there using HP Fortify.
 
 
 
