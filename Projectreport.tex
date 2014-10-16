@@ -2,6 +2,7 @@
 
 \usepackage[toc,xindy]{glossaries} 
 \usepackage{graphicx} % Displaying pictures in the document.
+\usepackage[floatrow]{chemstyle} % Displaying figures next to item lists.
 \usepackage[hidelinks]{hyperref}
 
 \title{INF226 - Project Report}
@@ -134,6 +135,7 @@ Figure~\ref{fig:zapscreenshot}  shows the result of running \gls{zap} on the \gl
 \newpage
 
 \section{HP Fortify}
+\label{sectionfortifytool}
 \paragraph{}
 HP Fortify assess, assure and protect enterprise software and applications from security vulnerabilities.
 Providing complete security testing and management through static and dynamic testing technologies. 
@@ -254,8 +256,51 @@ Finally the application ran successfully and the project could be built as an Ec
 As we discussed in the previous chapter the best approach would be manually using and testing the application relying on intersecting proxy and the passive scanner. 
 
 \subsection{Results}
+
+
 \section{HP Fortify}
 \subsection{Approach}
+\paragraph{}
+As mentioned in Chapter~\ref{sectionfortifytool}, \gls{for} is an automated static analysis tool for exposing security vulnerabilities in software applications. 
+The process of automated testing is an important part of securing software as they tend to find security issues that manual code reviews doesn't reveal.
+Running the \gls{for} \gls{sca} scan on the entire codebase revealed over ten thousand security issues where over hundred of them are marked as critical.
+In addition, does \gls{for} have some problems with analysing large amount of source code as it requires a whole lot of memory.
+Therefore has the focus been narrowed to a smaller part of the codebase in order to provide a more comprehensive and complete analysis.
+
+\paragraph{}
+The \gls{sca} scan has primarily been limited to the module called dhis-web-mobile.
+The scan revealed the following issues(shown in figure~\ref{fig:issuesfoundmobilemodule}):
+
+\begin{figure}[ht]
+\RawFloats
+    \begin{minipage}[b]{0.48\linewidth}
+        \begin{itemize}
+			\item Low: 405
+			\item Medium: 1
+			\item High: 149
+			\item Critical: 148
+		\end{itemize}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.48\linewidth}
+	    \centering
+	    \includegraphics[scale=0.65]{images/foundissues.png}
+	    \caption{\gls{for} \gls{sca} scan security vulnerabilities distribution between low, medium, high and critical. }
+    	\label{fig:issuesfoundmobilemodule}
+    \end{minipage}
+\end{figure}
+
+
+
+
+
+
+\paragraph{}
+There might be even more issues within this module since machine ran out of memory during the scan.
+However, the further analysis will be based on the results from this scan.
+
+
+
 \subsection{Results}
 
 \chapter{Analysis, Evaluation and Recommendations}
