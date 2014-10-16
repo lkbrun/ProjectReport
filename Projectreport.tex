@@ -250,10 +250,40 @@ Finally the application ran successfully and the project could be built as an Ec
 
 \section{\gls{zap}}
 \subsection{Approach}
+\paragraph{•}
 \gls{zap} offers different features which together creates a report which lists the potential issues in the application. 
-As we discussed in the previous chapter the best approach would be manually using and testing the application relying on intersecting proxy and the passive scanner. 
-
+As discussed in the previous chapter the best approach would be manually using and testing the application relying on intersecting proxy and the passive scanner. 
+When this is done the spider and the active scanner can make sure that the entire application is covered as well as doing some automated penetration testing. 
+\paragraph{•}
+The results will be categorized into security threat level as shown in figure \ref{fig:zapalerts}.
+The focus of this report will mostly be on the higher alert levels, but will briefly mention the less important once as well.
+The results will be further discussed in section \ref{sec:zapresult}.
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.65]{images/alerts.png}
+    \caption{Alert levels in \gls{zap}.}
+    \label{fig:zapalerts}
+\end{figure}
 \subsection{Results}
+\label{sec:zapresult}
+\paragraph{•}
+\begin{center}
+    \begin{tabular}{| l | l | l | p{5cm} |}
+    \hline
+    \# & Alert Level & Title & Problem explained \\ \hline
+    1 & High
+     & 22C & A clear day with lots of sunshine.  
+    However, the strong breeze will bring down the temperatures. \\ \hline
+    Tuesday & 9C & 19C & Cloudy with rain, across many northern regions. Clear spells
+    across most of Scotland and Northern Ireland,
+    but rain reaching the far northwest. \\ \hline
+    Wednesday & 10C & 21C & Rain will still linger for the morning.
+    Conditions will improve by early afternoon and continue
+    throughout the evening. \\
+    \hline
+    \end{tabular}
+\end{center}
+
 \section{HP Fortify}
 \subsection{Approach}
 \subsection{Results}
