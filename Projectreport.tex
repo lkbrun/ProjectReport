@@ -2,6 +2,7 @@
 
 \usepackage[toc,xindy]{glossaries} 
 \usepackage{graphicx} % Displaying pictures in the document.
+\usepackage[floatrow]{chemstyle} % Displaying figures next to item lists.
 \usepackage[hidelinks]{hyperref}
 
 \title{INF226 - Project Report}
@@ -134,6 +135,7 @@ Figure~\ref{fig:zapscreenshot}  shows the result of running \gls{zap} on the \gl
 \newpage
 
 \section{HP Fortify}
+\label{sectionfortifytool}
 \paragraph{}
 HP Fortify assess, assure and protect enterprise software and applications from security vulnerabilities.
 Providing complete security testing and management through static and dynamic testing technologies. 
@@ -254,6 +256,7 @@ Finally the application ran successfully and the project could be built as an Ec
 \gls{zap} offers different features which together creates a report which lists the potential issues in the application. 
 As discussed in the previous chapter the best approach would be manually using and testing the application relying on intersecting proxy and the passive scanner. 
 When this is done the spider and the active scanner can make sure that the entire application is covered as well as doing some automated penetration testing. 
+If you want a specialized analysis you can specify different scanner rules to suit your needs.
 \paragraph{•}
 The results will be categorized into security threat level as shown in figure \ref{fig:zapalerts}.
 The focus of this report will mostly be on the higher alert levels, but will briefly mention the less important once as well.
@@ -267,25 +270,50 @@ The results will be further discussed in section \ref{sec:zapresult}.
 \subsection{Results}
 \label{sec:zapresult}
 \paragraph{•}
-\begin{center}
-    \begin{tabular}{| l | l | l | p{5cm} |}
-    \hline
-    \# & Alert Level & Title & Problem explained \\ \hline
-    1 & High
-     & 22C & A clear day with lots of sunshine.  
-    However, the strong breeze will bring down the temperatures. \\ \hline
-    Tuesday & 9C & 19C & Cloudy with rain, across many northern regions. Clear spells
-    across most of Scotland and Northern Ireland,
-    but rain reaching the far northwest. \\ \hline
-    Wednesday & 10C & 21C & Rain will still linger for the morning.
-    Conditions will improve by early afternoon and continue
-    throughout the evening. \\
-    \hline
-    \end{tabular}
-\end{center}
 
 \section{HP Fortify}
 \subsection{Approach}
+\paragraph{}
+As mentioned in Chapter~\ref{sectionfortifytool}, \gls{for} is an automated static analysis tool for exposing security vulnerabilities in software applications. 
+The process of automated testing is an important part of securing software as they tend to find security issues that manual code reviews doesn't reveal.
+Running the \gls{for} \gls{sca} scan on the entire codebase revealed over ten thousand security issues where over hundred of them are marked as critical.
+In addition, does \gls{for} have some problems with analysing large amount of source code as it requires a whole lot of memory.
+Therefore has the focus been narrowed to a smaller part of the codebase in order to provide a more comprehensive and complete analysis.
+
+\paragraph{}
+The \gls{sca} scan has primarily been limited to the module called dhis-web-mobile.
+The scan revealed the following issues(shown in figure~\ref{fig:issuesfoundmobilemodule}):
+
+\begin{figure}[ht]
+\RawFloats
+    \begin{minipage}[b]{0.48\linewidth}
+        \begin{itemize}
+			\item Low: 405
+			\item Medium: 1
+			\item High: 149
+			\item Critical: 148
+		\end{itemize}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.48\linewidth}
+	    \centering
+	    \includegraphics[scale=0.65]{images/foundissues.png}
+	    \caption{\gls{for} \gls{sca} scan security vulnerabilities distribution between low, medium, high and critical. }
+    	\label{fig:issuesfoundmobilemodule}
+    \end{minipage}
+\end{figure}
+
+
+
+
+
+
+\paragraph{}
+There might be even more issues within this module since machine ran out of memory during the scan.
+However, the further analysis will be based on the results from this scan.
+
+
+
 \subsection{Results}
 
 \chapter{Analysis, Evaluation and Recommendations}
