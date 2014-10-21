@@ -341,23 +341,24 @@ In chapter \ref{cha:part3} we will try to further look into these problems, and 
 \subsection{Approach}
 \paragraph{}
 As mentioned in Chapter~\ref{sectionfortifytool}, \gls{for} is an automated static analysis tool for exposing security vulnerabilities in software applications. 
-The process of automated testing is an important part of securing software as they tend to find security issues that manual code reviews doesn't reveal.
-Running the \gls{for} \gls{sca} scan on the entire codebase revealed over ten thousand security issues where over hundred of them are marked as critical.
+The process of automated testing is an important part of securing software as they tend to find security issues that manual code reviews simply doesn't reveal.
+Running the \gls{for} \gls{sca} scan on the entire codebase found over ten thousand security issues where over hundred of them were marked as critical.
 In addition, does \gls{for} have some problems with analysing large amount of source code as it requires a whole lot of memory.
 Therefore has the focus been narrowed to a smaller part of the codebase in order to provide a more comprehensive and complete analysis.
 
 \paragraph{}
-The \gls{sca} scan has primarily been limited to the module called dhis-web-mobile.
-The scan revealed the following issues(shown in figure~\ref{fig:issuesfoundmobilemodule}):
+The \gls{sca} scan has primarily been limited to the module called dhis-web-mobile and is performed by right clicking the project in Eclipse and then clicking on analyse project.
+During scan completion will the perspective change automatically to \gls{for} Audit perspective.
+Here will the result of the scan be shown revealing the following issues(shown in figure~\ref{fig:issuesfoundmobilemodule}):
 
 \begin{figure}[ht]
 \RawFloats
     \begin{minipage}[b]{0.48\linewidth}
         \begin{itemize}
-			\item Low: 405
-			\item Medium: 1
-			\item High: 149
 			\item Critical: 148
+			\item High: 149
+			\item Medium: 1
+			\item Low: 405
 		\end{itemize}
     \end{minipage}
     \hfill
@@ -369,14 +370,16 @@ The scan revealed the following issues(shown in figure~\ref{fig:issuesfoundmobil
     \end{minipage}
 \end{figure}
 
-
-
-
+\paragraph{}
+There might even be more issues within this module since the machine ran out of memory during the scan.
+However, the further analysis will be based on the results from this scan.
+Since the amount of issues found are so immense, can't all the issues found be taken care of. 
+Therefore will particularly interesting issues and a wide variance between issues be taken into account.
 
 
 \paragraph{}
-There might be even more issues within this module since machine ran out of memory during the scan.
-However, the further analysis will be based on the results from this scan.
+More to come.
+
 
 
 
