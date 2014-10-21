@@ -260,17 +260,83 @@ If you want a specialized analysis you can specify different scanner rules to su
 \paragraph{•}
 The results will be categorized into security threat level as shown in figure \ref{fig:zapalerts}.
 The focus of this report will mostly be on the higher alert levels, but will briefly mention the less important once as well.
-The results will be further discussed in section \ref{sec:zapresult}.
+The results will be further discussed in section \ref{sec:zapresult-overview}.
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.65]{images/alerts.png}
     \caption{Alert levels in \gls{zap}.}
     \label{fig:zapalerts}
 \end{figure}
-\subsection{Results}
-\label{sec:zapresult}
+\subsection{Results Overview}
+\label{sec:zapresult-overview}
 \paragraph{•}
-
+Scanning \gls{dhis} with \gls{zap} revealed the following issues(shown in figure~\ref{fig:zapresults}):
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.65]{images/zap-result.png}
+    \caption{Result from \gls{zap}.}
+    \label{fig:zapresults}
+\end{figure}
+One thing to note about the analysis results is that the amount of duplicate results is really high. 
+Therefore the alert: "X-Content-Type-Options header missing" with 368 occurrences can be seen as one and the same alert. 
+The rest of the report will be based on this observation, discussing classes of vulnerabilities instead of each occurrence, while taking examples from each.
+Looking at the results you can see the amount of low alerts is quite high, with six different vulnerabilities, while only one high level alert. 
+In other words the distribution of vulnerabilities is the way it should be, and only one high level alert is quite good for such a large application.
+\subsection{Results Inspected}
+\paragraph{•}
+Ranking from lowest to highest we will inspect each of the different vulnerabilities.
+\paragraph{•}
+\textbf{X-Frame-Options header not set(Informational)}\\
+This alert is pretty easy to understand. 
+It only means that the \gls{http} response coming from the server should include the X-Frame-Options header to protect against 'Clickjacking' attacks.
+The developers of the codebase doesn't seem to know about this as every response from the server comes without this header.
+\paragraph{•}
+\textbf{X-Content-Type-Options header missing(Low)}\\
+As the previous this also involves setting a header parameter, in this case X-Content-Type-Options should be set to 'nosniff'. 
+This stops older versions of Chrome and Internet Explorer from performing MIME-sniffing. 
+MIMI-sniffing is the browser trying to determine the MIME type of the current content. 
+This is harmless in it self, but opens up to some security vulnerabilities by confusing the MIME-sniffing algorithm into interpreting the data the wrong way and not correctly assigning content type.
+\paragraph{•}
+\textbf{Web Browser XSS Protection Not Enabled(Low)}\\
+This means that the browsers XSS filter is not enabled or manually disabled.
+\paragraph{•}
+\textbf{Referer expose session ID(Low)}\\
+The analysis discovered multiple links leading away from the application and into an external host.
+This in combination with having the session ID in the URL(will talk more about this later) can potentially be dangerous as the session ID may be disclosed in the 'referrer' header parameter in the request to the external host.
+The 'referrer' parameter contains the url where the request was coming from, meaning that the session id is exposed inside the request.
+\paragraph{•}
+\textbf{Password Autocomplete in browser(Low)}\\
+The username and password is on autocomplete, which means that if an attacker gets access to your computer he can access the system using your credentials.
+\paragraph{•}
+\textbf{Cookie set without HttpOnly flag(Low)}\\
+Multiple cookies in the application does not contain the HttpOnly flag, which means that the cookies can be accessed using \gls{js}.
+If an attacker manage to run a malicious script on the application the cookies will be accessible and can be stolen.
+\paragraph{•}
+\textbf{Content-Type header missing(Low)}\\
+Some responses in the application doesn't set the Content-Type header.
+\paragraph{•}
+\textbf{Session ID in URL rewrite(Medium)}\\
+The application stores the session ID in the URL, which as we discussed previously can be exposed through the referrer header parameter when accessing a different host from your application.
+\paragraph{•}
+\textbf{Directory browsing(Medium)}\\
+The analysis detected that it was possible to view the directory listing.
+This may reveal backup source files and other hidden files which contains sensitive information.
+\paragraph{•}
+\textbf{Application Error disclosure(Medium)}\\
+It is possible that the application contains error messages which may disclose implementation details. 
+In this case this alert is closely related to the previous alert, as this alert is triggered by the fact that you can traverse the directory listing. 
+This error may be a configuration problem or perhaps it only occurs because we are running the application locally.
+\paragraph{•}
+\textbf{Cross Site Scripting - Reflected(High)}\\
+The last and only high level alert is a reflected \gls{xss} vulnerability. 
+Reflected \gls{xss} means that the attack is not stored in the application itself, but rather in a URL or \gls{http} header parameter.
+So it can only be triggered by a user which opens a malicious crafted link or a third-party web page.
+\gls{zap} managed to inject a small script on six different occasions when scanning the application.
+The application used the URL as part of the application on several places, which is were it could be taken advantage of.
+\gls{xss} attacks can be very harmful, and in a worst case scenario an attacker can hijack the users account information without the user having any idea what happened.
+This is a very serious vulnerability and needs to be fixed as soon as possible.
+\paragraph{•}
+In chapter \ref{cha:part3} we will try to further look into these problems, and look at how they can be solved, as well as give further advice on securing a web application.
 \section{HP Fortify}
 \subsection{Approach}
 \paragraph{}
@@ -317,7 +383,7 @@ However, the further analysis will be based on the results from this scan.
 \subsection{Results}
 
 \chapter{Analysis, Evaluation and Recommendations}
-
+\label{cha:part3}
 \newpage
 
 
