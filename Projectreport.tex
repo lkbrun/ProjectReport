@@ -248,16 +248,17 @@ Finally the application ran successfully and the project could be built as an Ec
 
 
 \chapter{Static Analysis and Penetration Testing Results}
-\textit{This chapter will cover the result of running the previously discussed analysis tools on the codebase in an attempt at finding flaws and vulnerabilities.}
+\textit{This chapter will cover the result of running the previously discussed analysis tools on the codebase as an attempt to find flaws and vulnerabilities.}
 
 \section{\gls{zap}}
 \subsection{Approach}
-\paragraph{•}
+\paragraph{}
 \gls{zap} offers different features which together creates a report which lists the potential issues in the application. 
 As discussed in the previous chapter the best approach would be manually using and testing the application relying on intersecting proxy and the passive scanner. 
 When this is done the spider and the active scanner can make sure that the entire application is covered as well as doing some automated penetration testing. 
 If you want a specialized analysis you can specify different scanner rules to suit your needs.
-\paragraph{•}
+
+\paragraph{}
 The results will be categorized into security threat level as shown in figure \ref{fig:zapalerts}.
 The focus of this report will mostly be on the higher alert levels, but will briefly mention the less important once as well.
 The results will be further discussed in section \ref{sec:zapresult-overview}.
@@ -337,6 +338,9 @@ The application used the URL as part of the application on several places, which
 This is a very serious vulnerability and needs to be fixed as soon as possible.
 \paragraph{•}
 In chapter \ref{cha:part3} we will try to further look into these problems, and look at how they can be solved, as well as give further advice on securing a web application.
+
+
+
 \section{HP Fortify}
 \subsection{Approach}
 \paragraph{}
@@ -346,6 +350,7 @@ Running the \gls{for} \gls{sca} scan on the entire codebase found over ten thous
 In addition, does \gls{for} have some problems with analysing large amount of source code as it requires a whole lot of memory.
 Therefore has the focus been narrowed to a smaller part of the codebase in order to provide a more comprehensive and complete analysis.
 
+\subsection{Results overview}
 \paragraph{}
 The \gls{sca} scan has primarily been limited to the module called dhis-web-mobile and is performed by right clicking the project in Eclipse and then clicking on analyse project.
 During scan completion will the perspective change automatically to \gls{for} Audit perspective.
@@ -373,17 +378,40 @@ Here will the result of the scan be shown revealing the following issues(shown i
 \paragraph{}
 There might even be more issues within this module since the machine ran out of memory during the scan.
 However, the further analysis will be based on the results from this scan.
-Since the amount of issues found are so immense, can't all the issues found be taken care of. 
-Therefore will particularly interesting issues and a wide variance between issues be taken into account.
+Since the amount of issues found are so immense, can't all the found issues be taken care of. 
+As a result will only particularly interesting issues be taken into account and a varied issues to cover a greater base of issues.
+In addition, will issues on the \gls{owasp} top 10 list be favoured over other issues and a variance between all the priority order ratings(mostly high and crucial).
 
 
+\subsection{Results inspected}
+\subsubsection{Password Management: Hardcoded Password (Critical)}
 \paragraph{}
-More to come.
+It is never a good idea to hardcode a password.
+It allows developers to view the password and makes it difficult to fix the problem. 
+A patch will be needed to fix the issue once the code is in production.
+A good rule of thumb is to never hardcode passwords.
+Storing passwords in plain text anywhere on the system allows anyone with sufficient permissions to read and potentially misuse the password.
 
 
+\subsubsection{Cross-Site Scripting: Reflected (Critical)}
+\paragraph{}
+A method sends unvalidated data to a web browser which can result in execution of malicious code.
+This kind of attack happen when data from an untrusted source enters an application where the untrusted source is a web request.
+An untrusted source basically means every user of the application.
+The data that is sent with the request is not being validated properly which makes it possible that scripts can be executed on the server or the database.
+You should always validate date provided by an untrusted source.
 
 
-\subsection{Results}
+\subsubsection{Shared Sink: Open Redirect (Critical)}
+\paragraph{}
+Unvalidated data is sent to an \gls{http} redirect function. 
+Redirects allow web application to redirect users to different pages either within the application or to external sources.
+If user supplied data is part of the determining process of where to redirect user, then the data must be validated.
+Attackers can utilize open redirects to trick users into visiting a \gls{url} to a trusted site and redirecting them to a malicious site.
+Open redirects are often abused as part of phishing scams to harvest sensitive data.
+You should not allow the end-user to control the destination in a redirect.
+
+
 
 \chapter{Analysis, Evaluation and Recommendations}
 \label{cha:part3}
