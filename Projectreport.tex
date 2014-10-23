@@ -9,6 +9,7 @@
 \date{\today}
 \author{Lasse K. Brun and Håvard R. Olsen}
 
+
 \include{glossary}
 \makeglossaries
 
@@ -254,14 +255,14 @@ Finally the application ran successfully and the project could be built as an Ec
 \section{\gls{zap}}
 \subsection{Approach}
 \paragraph{}
-\gls{zap} offers different features which together creates a report which lists the potential issues in the application. 
-As discussed in the previous chapter the best approach would be manually using and testing the application relying on intersecting proxy and the passive scanner. 
-When this is done the spider and the active scanner can make sure that the entire application is covered as well as doing some automated penetration testing. 
+\gls{zap} offers different features which together creates a list of the potential issues in the application. 
+As discussed in the previous chapter the best approach would be manually using and testing the application relying on the intersecting proxy and the passive scanner to do the groundwork. 
+When this is done the spider and the active scanner can make sure that the entire application is covered as well as do some automated penetration testing. 
 If you want a specialized analysis you can specify different scanner rules to suit your needs.
 
 \paragraph{}
-The results will be categorized into security threat level as shown in figure \ref{fig:zapalerts}.
-The focus of this report will mostly be on the higher alert levels, but will briefly mention the less important once as well.
+The results will be categorized into security threat levels as shown in figure \ref{fig:zapalerts}.
+Focus of this report will mostly be on the higher alert levels, but will go over the less important once as well.
 The results will be further discussed in section \ref{sec:zapresult-overview}.
 
 \begin{figure}[h]
@@ -285,32 +286,35 @@ Scanning \gls{dhis} with \gls{zap} revealed the following issues(shown in figure
 \end{figure}
 
 \paragraph{}
-One thing to note about the analysis results is that the amount of duplicate results is really high. 
+One thing to note about the analysis is that the amount of duplicate results is really high. 
 Therefore the alert: "X-Content-Type-Options header missing" with 368 occurrences can be seen as one and the same alert. 
-The rest of the report will be based on this observation, discussing classes of vulnerabilities instead of each occurrence, while taking examples from each.
-Looking at the results you can see the amount of low alerts is quite high, with six different vulnerabilities, while only one high level alert. 
-In other words the distribution of vulnerabilities is the way it should be, and only one high level alert is quite good for such a large application.
+The rest of the report will be based on this observation, discussing classes of vulnerabilities instead of each occurrence, while taking examples from each when trying to determine a solution for the problem.
+Looking at the results the first thing that stands out is the large amount informational and low level security alerts, in contrast to the small amount of high level alerts.
+This may indicate a certain level of focus towards well known security vulnerabilities by the developers.
 
 \subsection{Results Inspected}
 \paragraph{}
-Ranking from lowest to highest we will inspect each of the different vulnerabilities.
+Ranking from lowest to highest alert level we will inspect each of the different vulnerabilities.
 
 \subsubsection{X-Frame-Options header not set (Informational)}
 \paragraph{}
-This alert is pretty easy to understand. 
-It only means that the \gls{http} response coming from the server should include the X-Frame-Options header to protect against 'Clickjacking' attacks.
+This alert is pretty straight forward.
+It only means that the \gls{http} response coming from the server should include the X-Frame-Options header to protect against 'Clickjacking'\cite{clickjacking} attacks.
+Clickjacking is a form of hijacking attack, where the attacker hides malicious buttons or links on top the actual webpage.
+Users is then tricked into clicking them instead of their intended target, thus hijacking there click.
 The developers of the codebase doesn't seem to know about this as every response from the server comes without this header.
 
 \subsubsection{X-Content-Type-Options header missing (Low)}
 \paragraph{}
-As the previous this also involves setting a header parameter, in this case X-Content-Type-Options should be set to 'nosniff'. 
+As the previous this also involves setting a header parameter, in this case X-Content-Type-Options should be set to 'nosniff' \cite{no-sniff}. 
 This stops older versions of Chrome and Internet Explorer from performing MIME-sniffing. 
 MIMI-sniffing is the browser trying to determine the MIME type of the current content. 
 This is harmless in it self, but opens up to some security vulnerabilities by confusing the MIME-sniffing algorithm into interpreting the data the wrong way and not correctly assigning content type.
 
 \subsubsection{Web Browser XSS Protection Not Enabled (Low)}
 \paragraph{}
-This means that the browsers XSS filter is not enabled or manually disabled.
+This means that the browsers XSS filter is not enabled or manually disabled by setting a \gls{http} header parameter.
+More about this and other common \gls{http} header parameters here\cite{important-headers} 
 
 \subsubsection{Referrer expose session ID (Low)}
 \paragraph{}
@@ -330,10 +334,12 @@ If an attacker manage to run a malicious script on the application the cookies w
 \subsubsection{Content-Type header missing (Low)}
 \paragraph{}
 Some responses in the application doesn't set the Content-Type header.
+Setting the Content-Type gives you the control over how the content will be handled by the browser.
+In other words, the browser doesn't have to guess the content type and possibly make a mistake while doing so.
 
 \subsubsection{Session ID in URL rewrite (Medium)}
 \paragraph{}
-The application stores the session ID in the URL, which as we discussed previously can be exposed through the referrer header parameter when accessing a different host from your application.
+The application stores the session ID in the URL, which as we discussed previously can be exposed through the referrer header parameter when accessing a different host from your application.\cite{url-sessionid-risks}
 
 \subsubsection{Directory browsing (Medium)}
 \paragraph{}
