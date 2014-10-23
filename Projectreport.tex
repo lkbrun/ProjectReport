@@ -302,14 +302,14 @@ This alert is pretty straight forward.
 It only means that the \gls{http} response coming from the server should include the X-Frame-Options header to protect against 'Clickjacking'\cite{clickjacking} attacks.
 Clickjacking is a form of hijacking attack, where the attacker hides malicious buttons or links on top the actual webpage.
 Users is then tricked into clicking them instead of their intended target, thus hijacking there click.
-The developers of the codebase doesn't seem to know about this as every response from the server comes without this header.
+The developers of the codebase doesn't seem to know about this potential exploit as every response from the server comes without this header.
 
 \subsubsection{X-Content-Type-Options header missing (Low)}
 \paragraph{}
-As the previous this also involves setting a header parameter, in this case X-Content-Type-Options should be set to 'nosniff' \cite{no-sniff}. 
+As the previous section this also involves setting a header parameter, in this case X-Content-Type-Options should be set to 'nosniff' \cite{no-sniff}. 
 This stops older versions of Chrome and Internet Explorer from performing MIME-sniffing. 
 MIMI-sniffing is the browser trying to determine the MIME type of the current content. 
-This is harmless in it self, but opens up to some security vulnerabilities by confusing the MIME-sniffing algorithm into interpreting the data the wrong way and not correctly assigning content type.
+This is harmless in it self, but opens up to some security vulnerabilities in which the attackers confuse the MIME-sniffing algorithm into interpreting the data the wrong way and not correctly assigning content type.
 
 \subsubsection{Web Browser XSS Protection Not Enabled (Low)}
 \paragraph{}
@@ -349,14 +349,14 @@ This may reveal backup source files and other hidden files which contains sensit
 \subsubsection{Application Error disclosure (Medium)}
 \paragraph{}
 It is possible that the application contains error messages which may disclose implementation details. 
-In this case this alert is closely related to the previous alert, as this alert is triggered by the fact that you can traverse the directory listing. 
-This error may be a configuration problem or perhaps it only occurs because we are running the application locally.
+In this case this alert is closely related to the previous section, as this alert is triggered by the fact that you can traverse the directory listing. 
+The error may be a configuration problem or perhaps it only occurs because we are running the application locally.
 
 \subsubsection{Cross Site Scripting - Reflected (High)}
 \paragraph{}
 The last and only high level alert is a reflected \gls{xss} vulnerability. 
 Reflected \gls{xss} means that the attack is not stored in the application itself, but rather in a URL or \gls{http} header parameter.
-So it can only be triggered by a user which opens a malicious crafted link or a third-party web page.
+So it can only be triggered by a user which opens a maliciously crafted link or a third-party web page.
 \gls{zap} managed to inject a small script on six different occasions when scanning the application.
 The application used the URL as part of the application on several places, which is were it could be taken advantage of.
 \gls{xss} attacks can be very harmful, and in a worst case scenario an attacker can hijack the users account information without the user having any idea what happened.
