@@ -7,7 +7,7 @@
 
 \title{INF226 - Project Report}
 \date{\today}
-\author{Lasse K. Brun and Håvard R. Olsen}
+\author{Lasse K. Brun - lkbrun@gmail.com \\ Havard R. Olsen - haavard.olsen@live.com}
 
 
 \include{glossary}
@@ -234,7 +234,21 @@ Finally can you generate a report based on the analysis data that will show the 
 The system is very widespread being the preferred health management information system in 46 countries across five continents. 
 The health system helps governments and health organizations to manage their operations more efficiently, monitor processes and improve communication. 
 The system is portable and can capture data on any type of device, including desktops, laptops, tablets and smartphones. 
-More information about the system can be found here. \cite{dhis2-homepage, dhis2-wiki}
+More information about the system can be found here \cite{dhis2-homepage, dhis2-wiki}.
+
+\paragraph{}
+The system is basically a routine data based health information system. 
+The system has a three-layered architecture and is written in \gls{java} as shown in~\ref{fig:dhisarch}.
+The presentation layer is web-based, and the system can be used online as well as standalone.
+The business layer holds most of the application logic and provides methods that delegate to a corresponding method in the persistence layer.
+The persistence layer is based on Hibernate, which allows the application to run on any major \gls{dbms}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.65]{images/dhis2-architecture.png}
+    \caption{Diagram displaying the architecture of the \gls{dhis} application. }
+    \label{fig:dhisarch}
+\end{figure}
 
 \subsection{Installation and Experience}
 \paragraph{}
@@ -376,7 +390,7 @@ Running the \gls{for} \gls{sca} scan on the entire codebase found over ten thous
 In addition, does \gls{for} have some problems with analysing large amount of source code as it requires a whole lot of memory.
 Therefore has the focus been narrowed to a smaller part of the codebase in order to provide a more comprehensive and complete analysis.
 
-\subsection{Results overview}
+\subsection{Results Overview}
 \paragraph{}
 The \gls{sca} scan has primarily been limited to the module called dhis-web-mobile and is performed by right clicking the project in Eclipse and then clicking on analyse project.
 During scan completion will the perspective change automatically to \gls{for} Audit perspective.
@@ -409,7 +423,7 @@ As a result will only particularly interesting issues be taken into account and 
 In addition, will issues on the \gls{owasp} top 10 list be favoured over other issues and a variance between all the priority order ratings(mostly high and crucial).
 
 
-\subsection{Results inspected}
+\subsection{Results Inspected}
 \subsubsection{Password Management: Hardcoded Password (Critical)}
 \paragraph{}
 It is never a good idea to hardcode a password.
@@ -430,12 +444,36 @@ You should always validate date provided by an untrusted source.
 
 \subsubsection{Shared Sink: Open Redirect (Critical)}
 \paragraph{}
-Unvalidated data is sent to an \gls{http} redirect function. 
+Invalidated data is sent to an \gls{http} redirect function. 
 Redirects allow web application to redirect users to different pages either within the application or to external sources.
 If user supplied data is part of the determining process of where to redirect user, then the data must be validated.
 Attackers can utilize open redirects to trick users into visiting a \gls{url} to a trusted site and redirecting them to a malicious site.
 Open redirects are often abused as part of phishing scams to harvest sensitive data.
 You should not allow the end-user to control the destination in a redirect.
+
+\subsubsection{Injection: Log Forging (High)}
+\paragraph{}
+Applications use log files to store a history of events or transactions for later review, statistics gathering, or debugging.
+A method writes invalidated user input to the log.
+A potential attacker could take advantages of this behaviour to forge log entries or inject malicious content into the log.
+This is typically a vulnerability when data enters an application from an untrusted source and the data is written to an application or system file.
+
+\subsubsection{Bad Practices: Dynamic Method Invocation (High)}
+\paragraph{}
+A translate action exposes a public method that can be invoked by end users overriding the actions execute method.
+Dynamic method invocation allow an action to expose methods other than execute.
+The "!" character can be used in the \gls{url} to invoke any public method in the action if dynamic method invocation is enabled.
+Developers that are not aware of this feature can inadvertently expose business logic. 
+
+\subsubsection{System Information Leak: External (High)}
+\paragraph{}
+An exception might reveal system data or debugging information. 
+The information could help an adversary form a plan of attack.
+When the exception is thrown, might data about the system be revealed. 
+The revealed data can for example be information about the operating system, full pathnames, the existence of user names, or locations of configuration files, which could help an attacker plan an attack.
+Too informatively error messages could tell attackers precisely what kind of attacks the application is vulnerable to.
+
+
 
 
 
