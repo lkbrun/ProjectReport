@@ -469,7 +469,7 @@ It allows developers to view the password and makes it difficult to fix the prob
 Once the code is in production a patch will be needed to fix the issue.
 A good rule of thumb is to never hardcode passwords.
 Storing passwords in plain text anywhere on the system allows anyone with sufficient permissions to read and potentially misuse the password.
-The code presented in listing~\ref{hardcodedpassword} is found in DatabaseAutomaticAccessProvider class file, revealing the hardcoded username and password.
+The code presented in listing~\ref{hardcodedpassword} is found in DatabaseAutomaticAccessProvider class, revealing a hardcoded username and password.
 
 \begin{lstlisting}[caption=Hardcoded username and password, label=hardcodedpassword]
 
@@ -500,7 +500,7 @@ You should not allow the end-user to control the destination in a redirect.
 \subsubsection{Injection: Log Forging (High)}
 \paragraph{}
 Applications use log files to store a history of events or transactions for later review, statistics gathering, or debugging.
-A method writes invalidated user input to the log.
+The method CreateAccount method in the AccountController class writes invalidated user input to the log.
 A potential attacker could take advantages of this behaviour to forge log entries or inject malicious content into the log.
 This is typically a vulnerability when data enters an application from an untrusted source and the data is written to an application or system file.
 
@@ -508,13 +508,15 @@ This is typically a vulnerability when data enters an application from an untrus
 \subsubsection{Bad Practices: Dynamic Method Invocation (High)}
 \paragraph{}
 A translate action exposes a public method that can be invoked by end users overriding the actions execute method.
+This is part of Apache Struts 2 framework which is an extensible framework for creating enterprise ready applications.
+The framework streamline the full development cycle, all the way from building, to deploying and maintaining. 
 Dynamic method invocation allow an action to expose methods other than execute.
 The "!" character can be used in the \gls{url} to invoke any public method in the action if dynamic method invocation is enabled.
 Developers that are not aware of this feature can inadvertently expose business logic. 
 
 \subsubsection{System Information Leak: External (High)}
 \paragraph{}
-An exception might reveal system data or debugging information. 
+The method mapException catches an exception that might reveal system data or debugging information. 
 The information could help an adversary form an attack plan.
 When the exception is thrown, might data about the system be revealed. 
 The revealed data can for example be information about the operating system, full pathnames, the existence of user names, or locations of configuration files, which could help an attacker plan an attack.
@@ -554,10 +556,11 @@ In this section will a solution to the problems mentioned in Section~\ref{sec:hp
 Some of the problems have already been discussed, and will therefore be excluded in this section. 
 
 \subsubsection{Password Management: Hardcoded Password}
+\label{passwordmanagement}
 \paragraph{}
 As mentioned, it is never a good idea to hardcode a password for a number of reasons.
 Passwords should never be hardcoded and should generally be obfuscated and managed in external sources. 
-The solution is simple, remove the hardcoded password from the source code and retrieve the password another way, e.g from a database. 
+The solution is simple, remove the hardcoded password from the source code and retrieve the password another way, e.g from a database.
 
 \subsubsection{Shared Sink: Open Redirect}
 \paragraph{}
@@ -566,9 +569,14 @@ The solution is simple, remove the hardcoded password from the source code and r
 \subsubsection{Injection: Log Forging}
 \paragraph{}
 Log files are used to store history of application events for later review, statistics gathering, or debugging.
-In listing
+In listing~\ref{lstlogforging}, this is the case.
+The variable inviteUserName is a request parameter from method invocation. 
+Checking that the variable is not null and not empty is the only type of validation that is done. 
+One way of prevent log forging is with indirection.
+A set of legitimate log entries must be created that correspond to different logging events and only entries from this set can be logged.
+This ensures that only a certain set of logging entries will occur in the logging file and additionally makes it easier to read the file.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption=Log forging in the AccountController class, label=lstlogforging]
 	
 	boolean invitedByEmail = (inviteUsername != null && !inviteUsername.isEmpty());
 
@@ -577,6 +585,38 @@ In listing
 
 \end{lstlisting}
 
+\subsubsection{Bad Practices: Dynamic Method Invocation}
+\paragraph{}
+The application fails to disable dynamic method invocation for struts 2.
+As a developer you need to be aware of this, or else you can inadvertently expose business logic.
+In order to prevent this, you must disable the function in the Apache Struts 2 framework.
+This can be done multiple ways, one of them is to edit the struts2 configuration file by adding this line:
+\begin{center}
+	\textit{\textless name="struts.enable.DynamicMethodInvocation" value="false" /\textgreater }
+
+\end{center}
+
+
+
+\subsubsection{System Information Leak: External}
+\paragraph{}
+You should always write error messages with security in mind.
+In listing~\ref{lstsysteminformationleak}, the detail message string of the exception is written to the response object.
+In production environments, turn off detailed error information in favour of brief messages.
+Even brief error messages that do no reveal stack trace or database dumps can potentially aid an attacker. 
+For example, an "Access Denied" message can reveal that a file or user exists on the system.
+
+\begin{lstlisting}[caption=Parts of the method mapException, label=lstsysteminformationleak]
+	
+	response.getWriter().write( exception.getMessage() );
+
+	
+\end{lstlisting}
+
+\subsubsection{Password Management: Password in comment}
+\paragraph{}
+Passwords should never be hardcoded, not even in comments.
+The same solution provided in Section~\ref{passwordmanagement} will be sufficient.
 
 
 \section{Conclusion}
