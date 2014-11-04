@@ -34,26 +34,27 @@
 
 \section{Motivation}
 \paragraph{}
-In today's software world, security is more important than ever. 
+Security is more important than ever in today's software world. 
 New and refined attack methods keep emerging, making creation of secure software applications a full time job. 
 This has caused production of new, innovative tools and frameworks to handle analysis of software. 
 The tools and frameworks help software developers to find security breaches within their application. 
-Throughout this report will two of the most common tools be introduced, and tested on an actual codebase.
+Throughout this report will two common tools be introduced, and tested on an actual codebase.
 
 \paragraph{}
-The codebase we will be using is \gls{dhis}. \gls{dhis} is a flexible, web-based open-source information system. 
-The system has visualization features as \gls{gis}, charts and pivot tables. \cite{dhis2-homepage}
+We will be using the \gls{dhis} as codebase. \gls{dhis} is a flexible, web-based open-source information system. 
+The system has visualization features such as \gls{gis}, charts and pivot tables. You can read more about the system on their website \cite{dhis2-homepage}.
 
 
 \section{Goal}
 \paragraph{}
-The goal of this report is to expose security breaches within the provided codebase(\gls{dhis}). 
+The goal of this report is to expose security breaches within the codebase(\gls{dhis}). 
 This will give us a better understanding of how the analysing tools work and how to use them. 
 Thereafter will we provide an evaluation based on the result given by the tools. 
 The evaluation will result in a conclusion, centred around a solution to the security flaws. 
 Giving this report to the company responsible for the codebase, will hopefully give them an understanding of the security holes in their application and a solution to how they can resolve them.
 
 \chapter{Installation of tools and code base}
+\label{cha:part2}
 \textit{In this chapter will more concise details about the two tools be described, and go deeper into the provided codebase.}
 
 \section{OWASP Zed Attack Proxy}
@@ -234,7 +235,6 @@ Finally can you generate a report based on the analysis data that will show the 
 The system is very widespread being the preferred health management information system in 46 countries across five continents. 
 The health system helps governments and health organizations to manage their operations more efficiently, monitor processes and improve communication. 
 The system is portable and can capture data on any type of device, including desktops, laptops, tablets and smartphones. 
-More information about the system can be found here \cite{dhis2-homepage, dhis2-wiki}.
 
 \paragraph{}
 The system is basically a routine data based health information system. 
@@ -242,6 +242,7 @@ The system has a three-layered architecture and is written in \gls{java} as show
 The presentation layer is web-based, and the system can be used online as well as standalone.
 The business layer holds most of the application logic and provides methods that delegate to a corresponding method in the persistence layer.
 The persistence layer is based on Hibernate, which allows the application to run on any major \gls{dbms}.
+More information about the system can be found here \cite{dhis2-homepage, dhis2-wiki}.
 
 \begin{figure}[h]
     \centering
@@ -249,6 +250,7 @@ The persistence layer is based on Hibernate, which allows the application to run
     \caption{Diagram displaying the architecture of the \gls{dhis} application. }
     \label{fig:dhisarch}
 \end{figure}
+
 
 \subsection{Installation and Experience}
 \paragraph{}
@@ -270,13 +272,13 @@ Finally the application ran successfully and the project could be built as an Ec
 \subsection{Approach}
 \paragraph{}
 \gls{zap} offers different features which together creates a list of the potential issues in the application. 
-As discussed in the previous chapter the best approach would be manually using and testing the application relying on the intersecting proxy and the passive scanner to do the groundwork. 
-When this is done the spider and the active scanner can make sure that the entire application is covered as well as do some automated penetration testing. 
-If you want a specialized analysis you can specify different scanner rules to suit your needs.
+As discussed in Chapter~\ref{cha:part2}, the best approach would be to manually use and test the application relying on the intersecting proxy and the passive scanner to do the groundwork. 
+When this is done will the spider and the active scanner make sure that the entire application is covered as well as do some automated penetration testing. 
+You can specify different scanner rules to get a more specialized analysis that suits your needs.
 
 \paragraph{}
 The results will be categorized into security threat levels as shown in figure \ref{fig:zapalerts}.
-Focus of this report will mostly be on the higher alert levels, but will go over the less important once as well.
+Focus of this report will mostly be on the higher alert levels, but the lower threat will be considered as well.
 The results will be further discussed in section \ref{sec:zapresult-overview}.
 
 \begin{figure}[h]
@@ -290,7 +292,7 @@ The results will be further discussed in section \ref{sec:zapresult-overview}.
 \subsection{Results Overview}
 \label{sec:zapresult-overview}
 \paragraph{}
-Scanning \gls{dhis} with \gls{zap} revealed the following issues(shown in figure~\ref{fig:zapresults}):
+Scanning \gls{dhis} with \gls{zap} revealed the following issues(shown in~\ref{fig:zapresults}):
 
 \begin{figure}[h]
     \centering
@@ -300,10 +302,10 @@ Scanning \gls{dhis} with \gls{zap} revealed the following issues(shown in figure
 \end{figure}
 
 \paragraph{}
-One thing to note about the analysis is that the amount of duplicate results is really high. 
+One thing to note about the analysis, is that the amount of duplicated results are really high. 
 Therefore the alert: "X-Content-Type-Options header missing" with 368 occurrences can be seen as one and the same alert. 
 The rest of the report will be based on this observation, discussing classes of vulnerabilities instead of each occurrence, while taking examples from each when trying to determine a solution for the problem.
-Looking at the results the first thing that stands out is the large amount informational and low level security alerts, in contrast to the small amount of high level alerts.
+Looking at the results, the first thing that stands out is the large amount informational and low level security alerts, in contrast to the small amount of high level alerts.
 This may indicate a certain level of focus towards well known security vulnerabilities by the developers.
 
 \subsection{Results Inspected}
@@ -313,6 +315,7 @@ Ranking from lowest to highest alert level we will inspect each of the different
 \subsubsection{X-Frame-Options header not set (Informational)}
 \paragraph{}
 This alert is pretty straight forward.
+<<<<<<< HEAD
 It only means that the \gls{http} response coming from the server should include the X-Frame-Options header to protect against 'Clickjacking'\cite{clickjacking} attacks.
 Clickjacking is a form of hijacking attack, where the attacker hides malicious buttons or links on top the actual webpage.
 Users is then tricked into clicking them instead of their intended target, thus hijacking there click.
@@ -324,17 +327,31 @@ As the previous section this also involves setting a header parameter, in this c
 This stops older versions of Chrome and Internet Explorer from performing MIME-sniffing. 
 MIMI-sniffing is the browser trying to determine the MIME type of the current content. 
 This is harmless in it self, but opens up to some security vulnerabilities in which the attackers confuse the MIME-sniffing algorithm into interpreting the data the wrong way and not correctly assigning content type.
+=======
+It only means that the \gls{http} response coming from the server should include the X-Frame-Options header to protect against 'Clickjacking' attacks.
+Clickjacking is a form of hijacking attack, where the attacker hides malicious buttons or links on top the actual webpage \cite{clickjacking}.
+Users are then tricked into clicking them instead of their intended target, thus hijacking there click.
+The developers of the codebase doesn't seem to know about this as every response from the server comes without this header.
 
-\subsubsection{Web Browser XSS Protection Not Enabled (Low)}
+\subsubsection{X-Content-Type-Options header missing (Low)}
 \paragraph{}
-This means that the browsers XSS filter is not enabled or manually disabled by setting a \gls{http} header parameter.
-More about this and other common \gls{http} header parameters here\cite{important-headers} 
+As the previous issue mentioned, is this issue also about setting a header parameter.
+However, in this case should the 'X-Content-Type-Options' be set to 'nosniff' \cite{no-sniff}. 
+This stops older versions of Chrome and Internet Explorer from performing \gls{mime}-sniffing. 
+\gls{mime}-sniffing is the browser trying to determine the MIME type of the current content. 
+This is harmless as itself, but opens up to some security vulnerabilities by confusing the \gls{mime}-sniffing algorithm into interpreting the data the wrong way and not correctly assigning the content type.
+>>>>>>> a667e018c95ad162ff72bcfe33d6d646a0401dec
+
+\subsubsection{Web Browser \gls{xss} Protection Not Enabled (Low)}
+\paragraph{}
+This means that the browsers \gls{xss} filter is not enabled or manually disabled by setting a \gls{http} header parameter.
+More about this and other common \gls{http} header parameters can be found here\cite{important-headers}. 
 
 \subsubsection{Referrer expose session ID (Low)}
 \paragraph{}
 The analysis discovered multiple links leading away from the application and into an external host.
-This in combination with having the session ID in the URL(will talk more about this later) can potentially be dangerous as the session ID may be disclosed in the 'referrer' header parameter in the request to the external host.
-The 'referrer' parameter contains the url where the request was coming from, meaning that the session id is exposed inside the request.
+This in combination with having the session ID in the \gls{url}(will talk more about this later) can potentially be dangerous as the session ID may be disclosed in the 'referrer' header parameter in the request to the external host.
+The 'referrer' parameter contains the \gls{url} where the request was coming from, meaning that the session ID is exposed inside the request.
 
 \subsubsection{Password Autocomplete in browser (Low)}
 \paragraph{}
@@ -343,7 +360,7 @@ The username and password is on autocomplete, which means that if an attacker ge
 \subsubsection{Cookie set without HttpOnly flag (Low)}
 \paragraph{}
 Multiple cookies in the application does not contain the HttpOnly flag, which means that the cookies can be accessed using \gls{js}.
-If an attacker manage to run a malicious script on the application the cookies will be accessible and can be stolen.
+If an attacker manage to run a malicious script on the application, the cookies will be accessible and can be stolen.
 
 \subsubsection{Content-Type header missing (Low)}
 \paragraph{}
@@ -351,9 +368,9 @@ Some responses in the application doesn't set the Content-Type header.
 Setting the Content-Type gives you the control over how the content will be handled by the browser.
 In other words, the browser doesn't have to guess the content type and possibly make a mistake while doing so.
 
-\subsubsection{Session ID in URL rewrite (Medium)}
+\subsubsection{Session ID in \gls{url} rewrite (Medium)}
 \paragraph{}
-The application stores the session ID in the URL, which as we discussed previously can be exposed through the referrer header parameter when accessing a different host from your application.\cite{url-sessionid-risks}
+The application stores the session ID in the \gls{url}, which as we discussed previously can be exposed through the referrer header parameter when accessing a different host from your application \cite{url-sessionid-risks}.
 
 \subsubsection{Directory browsing (Medium)}
 \paragraph{}
@@ -363,22 +380,28 @@ This may reveal backup source files and other hidden files which contains sensit
 \subsubsection{Application Error disclosure (Medium)}
 \paragraph{}
 It is possible that the application contains error messages which may disclose implementation details. 
+<<<<<<< HEAD
 In this case this alert is closely related to the previous section, as this alert is triggered by the fact that you can traverse the directory listing. 
 The error may be a configuration problem or perhaps it only occurs because we are running the application locally.
+=======
+In this case the alert is closely related to the previous alert, as this alert is triggered by the fact that you can traverse the directory listing. 
+This error may be a configuration problem or perhaps it only occurs because we are running the application locally.
+>>>>>>> a667e018c95ad162ff72bcfe33d6d646a0401dec
 
-\subsubsection{Cross Site Scripting - Reflected (High)}
+\subsubsection{Cross-Site Scripting - Reflected (High)}
 \paragraph{}
 The last and only high level alert is a reflected \gls{xss} vulnerability. 
+<<<<<<< HEAD
 Reflected \gls{xss} means that the attack is not stored in the application itself, but rather in a URL or \gls{http} header parameter.
 So it can only be triggered by a user which opens a maliciously crafted link or a third-party web page.
+=======
+Reflected \gls{xss} means that the attack is not stored in the application itself, but rather in a \gls{url} or \gls{http} header parameter.
+So it can only be triggered by a user which opens a malicious crafted link or a third-party web page.
+>>>>>>> a667e018c95ad162ff72bcfe33d6d646a0401dec
 \gls{zap} managed to inject a small script on six different occasions when scanning the application.
-The application used the URL as part of the application on several places, which is were it could be taken advantage of.
+The application used the \gls{url} as part of the application on several places, which is where it could be taken advantage of.
 \gls{xss} attacks can be very harmful, and in a worst case scenario an attacker can hijack the users account information without the user having any idea what happened.
 This is a very serious vulnerability and needs to be fixed as soon as possible.
-
-\paragraph{}
-In chapter \ref{cha:part3} we will try to further look into these problems, and look at how they can be solved, as well as give further advice on securing a web application.
-
 
 
 \section{HP Fortify}
@@ -392,9 +415,9 @@ Therefore has the focus been narrowed to a smaller part of the codebase in order
 
 \subsection{Results Overview}
 \paragraph{}
-The \gls{sca} scan has primarily been limited to the module called dhis-web-mobile and is performed by right clicking the project in Eclipse and then clicking on analyse project.
+The \gls{sca} scan has primarily been limited to the module called dhis-web-mobile. In Eclipse you can right clicking the project and then clicking on analyse project to start the \gls{sca} scan.
 During scan completion will the perspective change automatically to \gls{for} Audit perspective.
-Here will the result of the scan be shown revealing the following issues(shown in figure~\ref{fig:issuesfoundmobilemodule}):
+The result of the scan will shown up in this perspective, and in figure~\ref{fig:issuesfoundmobilemodule} you can see what the scan of the web-module revealed:
 
 \begin{figure}[ht]
 \RawFloats
@@ -419,8 +442,9 @@ Here will the result of the scan be shown revealing the following issues(shown i
 There might even be more issues within this module since the machine ran out of memory during the scan.
 However, the further analysis will be based on the results from this scan.
 Since the amount of issues found are so immense, can't all the found issues be taken care of. 
-As a result will only particularly interesting issues be taken into account and a varied issues to cover a greater base of issues.
-In addition, will issues on the \gls{owasp} top 10 list be favoured over other issues and a variance between all the priority order ratings(mostly high and crucial).
+As a result will only particularly interesting issues be taken into account and a varied composition of issues to cover a greater base of issues.
+In addition, will issues on the \gls{owasp} top 10 list be favoured over other issues and chosen from all the priority order ratings but mostly high and crucial.
+As with the \gls{zap} scan does also this scan reveal a lot of duplicated issues and they will be considered the same issue.
 
 
 \subsection{Results Inspected}
@@ -428,25 +452,25 @@ In addition, will issues on the \gls{owasp} top 10 list be favoured over other i
 \paragraph{}
 It is never a good idea to hardcode a password.
 It allows developers to view the password and makes it difficult to fix the problem. 
-A patch will be needed to fix the issue once the code is in production.
+Once the code is in production a patch will be needed to fix the issue.
 A good rule of thumb is to never hardcode passwords.
 Storing passwords in plain text anywhere on the system allows anyone with sufficient permissions to read and potentially misuse the password.
 
 
 \subsubsection{Cross-Site Scripting: Reflected (Critical)}
 \paragraph{}
-A method sends unvalidated data to a web browser which can result in execution of malicious code.
+A method sends invalidated data to a web browser which can result in execution of malicious code.
 This kind of attack happen when data from an untrusted source enters an application where the untrusted source is a web request.
 An untrusted source basically means every user of the application.
-The data that is sent with the request is not being validated properly which makes it possible that scripts can be executed on the server or the database.
-You should always validate date provided by an untrusted source.
+The data that is sent with the request is not being validated properly which makes it possible to execute scripts on the server or the database.
+You should always validate data provided by an untrusted source.
 
 
 \subsubsection{Shared Sink: Open Redirect (Critical)}
 \paragraph{}
 Invalidated data is sent to an \gls{http} redirect function. 
 Redirects allow web application to redirect users to different pages either within the application or to external sources.
-If user supplied data is part of the determining process of where to redirect user, then the data must be validated.
+If user supplied data is part of the determining process of redirecting a user, then the data must be validated.
 Attackers can utilize open redirects to trick users into visiting a \gls{url} to a trusted site and redirecting them to a malicious site.
 Open redirects are often abused as part of phishing scams to harvest sensitive data.
 You should not allow the end-user to control the destination in a redirect.
@@ -468,17 +492,28 @@ Developers that are not aware of this feature can inadvertently expose business 
 \subsubsection{System Information Leak: External (High)}
 \paragraph{}
 An exception might reveal system data or debugging information. 
-The information could help an adversary form a plan of attack.
+The information could help an adversary form an attack plan.
 When the exception is thrown, might data about the system be revealed. 
 The revealed data can for example be information about the operating system, full pathnames, the existence of user names, or locations of configuration files, which could help an attacker plan an attack.
 Too informatively error messages could tell attackers precisely what kind of attacks the application is vulnerable to.
 
+\subsubsection{Password Management: Password in comment (Low)}
+\paragraph{}
+As mentioned earlier it is never a good idea to hardcode passwords. 
+This can compromise system security in a way that cannot be easily remedied.
+Storing password details within comments is equivalent to hardcoding passwords.
+Once the code is published, the password is now leaked to the outside world and cannot be protected or changed without patching the software. 
+This is the case in several files in the codebase, revealing password details in the comment.
 
 
+\section{Chapter Closing Words}
+\paragraph{}
+In the next chapter (chapter~\ref{cha:part4}) we will try to look further into these problems, and look at how they can be solved, as well as give further advice on securing the web application.
+The results from the two scans will also be compared and combined to make a complete evaluation of all the improvements that can be done.
 
 
 \chapter{Analysis, Evaluation and Recommendations}
-\label{cha:part3}
+\label{cha:part4}
 \newpage
 
 
