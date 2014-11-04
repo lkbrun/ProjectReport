@@ -266,6 +266,7 @@ Finally the application ran successfully and the project could be built as an Ec
 
 
 \chapter{Static Analysis and Penetration Testing Results}
+\label{cha:part2}
 \textit{This chapter will cover the result of running the previously discussed analysis tools on the codebase as an attempt to find flaws and vulnerabilities.}
 
 \section{\gls{zap}}
@@ -500,6 +501,52 @@ The results from the two scans will also be compared and combined to make a comp
 
 \section{Solutions}
 \subsection{\gls{zap}}
+
+\subsubsection{Missing header parameters}
+\paragraph{•}
+
+In \ref{cha:part3} we saw that the codebase contained several "Missing header parameter" vulnerabilities, such as \textit{Content-Type} and 
+\textit{X-Frame-Options}.
+The solution for this type of flaws is easy to understand, since all you need to do is set the header parameter in you \gls{http} requests.
+\gls{dhis} is using \gls{spring} as there server-side implementation, and the additional framework \gls{spring}-security.
+\gls{spring}-security has all of these header parameters on by default so in theory it should work out of the box.
+One thing that could be the problem is that on certain requests they are specifying a header in the code.
+By doing so they are saying that only the specified header should be included.
+\paragraph{•}
+Our recommendation is to review the code which handles request and response from the client and see if you are specifying any headers.
+
+\subsubsection{Password Autocomplete in browser}
+\paragraph{•}
+In many cases there isn't any need to disable password autocomplete, as you need access to the users computer in order to exploit this.
+Nevertheless in some cases this might be necessary, and the way to disable autocomplete is quite easy as you can see in the example below.
+\\
+\textit{ \textless input type="password" name="foo" autocomplete="off" /\textgreater}
+
+\subsubsection{Cookie set without HttpOnly flag}
+\paragraph{•}
+By not setting the HttpOnly flag on your cookies you risk exposing them to malicious \gls{js}.
+Fortunately there is two very easy ways to fix this if you are using \gls{java}, ether programmatically\ref{httponly} or declaratively by specifying it in the web.xml config file.\cite{httponly}
+\begin{lstlisting}[caption=Setting the HttpOnly Flag in Java,label=httponly]
+Cookie cookie = getMyCookie("myCookieName");
+cookie.setHttpOnly(true);
+\end{lstlisting}
+
+
+\subsubsection{Referrer expose session ID}
+\paragraph{•}
+This is a consequential error because the application stores the session ID in the \gls{url}.
+We will discuss how to solve this in \ref{sec:sessionid}.
+
+\subsubsection{Session ID in \gls{url} rewrite}
+\label{sec:sessionid}
+\paragraph{•}
+
+
+
+\subsubsection{Directory browsing}
+
+\subsubsection{Application Error disclosure}
+
 \subsection{\gls{for}}
 \section{Conclusion}
 
