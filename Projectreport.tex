@@ -4,6 +4,42 @@
 \usepackage{graphicx} % Displaying pictures in the document.
 \usepackage[floatrow]{chemstyle} % Displaying figures next to item lists.
 \usepackage[hidelinks]{hyperref}
+\usepackage{listings} % Adding source code listings.
+\usepackage{color}
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={public, if, for, else, class, import, return, null},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
 
 \title{INF226 - Project Report}
 \date{\today}
@@ -383,6 +419,7 @@ This is a very serious vulnerability and needs to be fixed as soon as possible.
 
 
 \section{HP Fortify}
+\label{sec:hpfortify}
 \subsection{Approach}
 \paragraph{}
 As mentioned in Chapter~\ref{sectionfortifytool}, \gls{for} is an automated static analysis tool for exposing security vulnerabilities in software applications. 
@@ -433,6 +470,14 @@ It allows developers to view the password and makes it difficult to fix the prob
 Once the code is in production a patch will be needed to fix the issue.
 A good rule of thumb is to never hardcode passwords.
 Storing passwords in plain text anywhere on the system allows anyone with sufficient permissions to read and potentially misuse the password.
+The code presented in listing~\ref{hardcodedpassword} is found in DatabaseAutomaticAccessProvider class file, revealing the hardcoded username and password.
+
+\begin{lstlisting}[caption=Hardcoded username and password, label=hardcodedpassword]
+
+	String username = "admin";
+	String password = "district";
+	
+\end{lstlisting}
 
 
 \subsubsection{Cross-Site Scripting: Reflected (Critical)}
@@ -459,6 +504,7 @@ Applications use log files to store a history of events or transactions for late
 A method writes invalidated user input to the log.
 A potential attacker could take advantages of this behaviour to forge log entries or inject malicious content into the log.
 This is typically a vulnerability when data enters an application from an untrusted source and the data is written to an application or system file.
+
 
 \subsubsection{Bad Practices: Dynamic Method Invocation (High)}
 \paragraph{}
@@ -491,21 +537,25 @@ The results from the two scans will also be compared and combined to make a comp
 
 
 \chapter{Analysis, Evaluation and Recommendations}
-\label{cha:part4}
+\label{cha:part3}
 
 \textit{This chapter will combine the results from both \gls{zap} and \gls{for}, with the purpose of finding common flaws and vulnerabilities.}
 \textit{We then discuss possible solutions and what we recommend to improve the system.}
 
-\section{Comparing the results}
-%Combine the most critical results to one list of priority
+\section{Solutions and Recommendations}
 
-\section{Solutions}
+\subsection{Comparing the results}
+%Combine the most critical result (XSS)
+%Both Zap and Fortify found this
+%Seems to be a big problem in the application
+%
+
 \subsection{\gls{zap}}
 
 \subsubsection{Missing header parameters}
 \paragraph{•}
 
-In \ref{cha:part3} we saw that the codebase contained several "Missing header parameter" vulnerabilities, such as \textit{Content-Type} and 
+In \ref{cha:part2} we saw that the codebase contained several "Missing header parameter" vulnerabilities, such as \textit{Content-Type} and 
 \textit{X-Frame-Options}.
 The solution for this type of flaws is easy to understand, since all you need to do is set the header parameter in you \gls{http} requests.
 \gls{dhis} is using \gls{spring} as there server-side implementation, and the additional framework \gls{spring}-security.
@@ -514,6 +564,7 @@ One thing that could be the problem is that on certain requests they are specify
 By doing so they are saying that only the specified header should be included.
 \paragraph{•}
 Our recommendation is to review the code which handles request and response from the client and see if you are specifying any headers.
+If so then you have to specify each header manually for that response.\cite{spring-security}
 
 \subsubsection{Password Autocomplete in browser}
 \paragraph{•}
@@ -525,7 +576,8 @@ Nevertheless in some cases this might be necessary, and the way to disable autoc
 \subsubsection{Cookie set without HttpOnly flag}
 \paragraph{•}
 By not setting the HttpOnly flag on your cookies you risk exposing them to malicious \gls{js}.
-Fortunately there is two very easy ways to fix this if you are using \gls{java}, ether programmatically\ref{httponly} or declaratively by specifying it in the web.xml config file.\cite{httponly}
+Fortunately there is two very easy ways to fix this if you are using \gls{java}, ether programmatically(Listing \ref{httponly}) or declaratively by specifying it in the web.xml config file.\cite{httponly}
+\\
 \begin{lstlisting}[caption=Setting the HttpOnly Flag in Java,label=httponly]
 Cookie cookie = getMyCookie("myCookieName");
 cookie.setHttpOnly(true);
@@ -534,20 +586,63 @@ cookie.setHttpOnly(true);
 
 \subsubsection{Referrer expose session ID}
 \paragraph{•}
-This is a consequential error because the application stores the session ID in the \gls{url}.
-We will discuss how to solve this in \ref{sec:sessionid}.
+This is a consequential error caused by the application storing the session ID in the \gls{url}.
+We will discuss how to solve this in section: \nameref{subsec:sessionid}.
 
 \subsubsection{Session ID in \gls{url} rewrite}
-\label{sec:sessionid}
+\label{subsec:sessionid}
 \paragraph{•}
-
-
+Storing the session ID solely in the \gls{url} is very dangerous as it is easy to hijack it.
+It is recommended that you use a combination between storing it as a cookie and the \gls{url}.
+Because cookies provide multiple security features such as the "secure" attribute which instructs the browser to only send it through secure channels.
+This stops any man-in-the-middle attacks trying to steal the session.\cite{session-managment}
 
 \subsubsection{Directory browsing}
+\paragraph{•}
+As discussed in chapter \ref{cha:part2} this could be a false positive, since the application has been tested on a local machine.
+Therefore it is hard to know if this even is a problem when deployed to a real webserver. 
+To be safe it can be wise to try and browse the directory of a deployed application to see if this is possible.
+If you discover that this is in fact possible, you need to access your .htaccess file which stores this kinds of policies and add the line:
+\\
+\textit{Options -Indexes} to it.
+Doing so will turn of directory browsing in your application.
 
 \subsubsection{Application Error disclosure}
+\paragraph{•}
+This is an error which is caused by the fact that you can browse the directory of the application, as all the alerts came from those pages.
+Therefore by solving the Directory browsing problem you will also solve this one.
 
 \subsection{\gls{for}}
+\paragraph{}
+In this section will a solution to the problems mentioned in Section~\ref{sec:hpfortify} be provided.
+Some of the problems have already been discussed, and will therefore be excluded in this section. 
+
+\subsubsection{Password Management: Hardcoded Password}
+\paragraph{}
+As mentioned, it is never a good idea to hardcode a password for a number of reasons.
+Passwords should never be hardcoded and should generally be obfuscated and managed in external sources. 
+The solution is simple, remove the hardcoded password from the source code and retrieve the password another way, e.g from a database. 
+
+\subsubsection{Shared Sink: Open Redirect}
+\paragraph{}
+
+
+\subsubsection{Injection: Log Forging}
+\paragraph{}
+Log files are used to store history of application events for later review, statistics gathering, or debugging.
+In listing
+
+\begin{lstlisting}
+	
+	boolean invitedByEmail = (inviteUsername != null && !inviteUsername.isEmpty());
+
+	log.info( "AccountController: inviteUsername = " + inviteUsername );
+
+
+\end{lstlisting}
+
+
+
 \section{Conclusion}
 
 \newpage
