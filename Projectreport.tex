@@ -4,6 +4,42 @@
 \usepackage{graphicx} % Displaying pictures in the document.
 \usepackage[floatrow]{chemstyle} % Displaying figures next to item lists.
 \usepackage[hidelinks]{hyperref}
+\usepackage{listings} % Adding source code listings.
+\usepackage{color}
+
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={public, if, for, else, class, import, return, null},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
 
 \title{INF226 - Project Report}
 \date{\today}
@@ -382,6 +418,7 @@ This is a very serious vulnerability and needs to be fixed as soon as possible.
 
 
 \section{HP Fortify}
+\label{sec:hpfortify}
 \subsection{Approach}
 \paragraph{}
 As mentioned in Chapter~\ref{sectionfortifytool}, \gls{for} is an automated static analysis tool for exposing security vulnerabilities in software applications. 
@@ -432,6 +469,14 @@ It allows developers to view the password and makes it difficult to fix the prob
 Once the code is in production a patch will be needed to fix the issue.
 A good rule of thumb is to never hardcode passwords.
 Storing passwords in plain text anywhere on the system allows anyone with sufficient permissions to read and potentially misuse the password.
+The code presented in listing~\ref{hardcodedpassword} is found in DatabaseAutomaticAccessProvider class file, revealing the hardcoded username and password.
+
+\begin{lstlisting}[caption=Hardcoded username and password, label=hardcodedpassword]
+
+	String username = "admin";
+	String password = "district";
+	
+\end{lstlisting}
 
 
 \subsubsection{Cross-Site Scripting: Reflected (Critical)}
@@ -458,6 +503,7 @@ Applications use log files to store a history of events or transactions for late
 A method writes invalidated user input to the log.
 A potential attacker could take advantages of this behaviour to forge log entries or inject malicious content into the log.
 This is typically a vulnerability when data enters an application from an untrusted source and the data is written to an application or system file.
+
 
 \subsubsection{Bad Practices: Dynamic Method Invocation (High)}
 \paragraph{}
@@ -500,7 +546,39 @@ The results from the two scans will also be compared and combined to make a comp
 
 \section{Solutions}
 \subsection{\gls{zap}}
+
+
 \subsection{\gls{for}}
+\paragraph{}
+In this section will a solution to the problems mentioned in Section~\ref{sec:hpfortify} be provided.
+Some of the problems have already been discussed, and will therefore be excluded in this section. 
+
+\subsubsection{Password Management: Hardcoded Password}
+\paragraph{}
+As mentioned, it is never a good idea to hardcode a password for a number of reasons.
+Passwords should never be hardcoded and should generally be obfuscated and managed in external sources. 
+The solution is simple, remove the hardcoded password from the source code and retrieve the password another way, e.g from a database. 
+
+\subsubsection{Shared Sink: Open Redirect}
+\paragraph{}
+
+
+\subsubsection{Injection: Log Forging}
+\paragraph{}
+Log files are used to store history of application events for later review, statistics gathering, or debugging.
+In listing
+
+\begin{lstlisting}
+	
+	boolean invitedByEmail = (inviteUsername != null && !inviteUsername.isEmpty());
+
+	log.info( "AccountController: inviteUsername = " + inviteUsername );
+
+
+\end{lstlisting}
+
+
+
 \section{Conclusion}
 
 \newpage
