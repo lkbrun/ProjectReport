@@ -550,7 +550,13 @@ The results from the two scans will also be compared and combined to make a comp
 %Combine the most critical result (XSS)
 %Both Zap and Fortify found this
 %Seems to be a big problem in the application
-%
+The tools used in this report \gls{zap} and \gls{for} found a lot of different vulnerabilities, ranging from low to critical severity.
+The only overlapping vulnerability worth mentioning was reflected \gls{xss}.
+Considering the level of severity and that it was discovered multiple times, both with a live attack from \gls{zap} and the discovery of unvalidated input from \gls{for}, this section will focus on how to better protect the system from \gls{xss}.
+\paragraph{}
+
+There are many ways of preventing \gls{xss}, which depends on what framework you are using and how much control you want over it.
+
 
 \subsection{\gls{zap}}
 
@@ -684,6 +690,11 @@ The same solution provided in Section~\ref{passwordmanagement} will be sufficien
 
 
 \section{Conclusion}
+\paragraph{}
+% Our opinion of zap and fortify
+% Overall opinion on the codebase as it is.
+% How the results have been ? 
+%Even though this report has revealed multiple weaknesses of various severity 
 
 \newpage
 
