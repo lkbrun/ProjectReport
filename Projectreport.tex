@@ -491,7 +491,7 @@ You should always validate data provided by an untrusted source.
 
 \subsubsection{Shared Sink: Open Redirect (Critical)}
 \paragraph{}
-Invalidated data is sent to an \gls{http} redirect function. 
+In RequiredLoginFilter is invalidated data sent to an \gls{http} redirect function. 
 Redirects allow web application to redirect users to different pages either within the application or to external sources.
 If user supplied data is part of the determining process of redirecting a user, then the data must be validated.
 Attackers can utilize open redirects to trick users into visiting a \gls{url} to a trusted site and redirecting them to a malicious site.
@@ -628,7 +628,10 @@ The solution is simple, remove the hardcoded password from the source code and r
 
 \subsubsection{Shared Sink: Open Redirect}
 \paragraph{}
-
+Redirects allow web applications to direct users to different pages within the application or to external sites. 
+\gls{for} claims that invalidated data is passed to a \gls{http} redirect function.
+However, the invalidated data is not user created and it is therefore not necessary to validate the data.
+Meaning that this a false positive problem found by \gls{for}. 
 
 \subsubsection{Injection: Log Forging}
 \paragraph{}
@@ -652,14 +655,13 @@ This ensures that only a certain set of logging entries will occur in the loggin
 \subsubsection{Bad Practices: Dynamic Method Invocation}
 \paragraph{}
 The application fails to disable dynamic method invocation for struts 2.
-As a developer you need to be aware of this, or else you can inadvertently expose business logic.
+As a developer using struts 2 you need to be aware of this, or else you can inadvertently expose business logic.
 In order to prevent this, you must disable the function in the Apache Struts 2 framework.
-This can be done multiple ways, one of them is to edit the struts2 configuration file by adding this line:
+This can be done multiple ways, one of them is to edit the struts 2 configuration file by adding this line:
 \begin{center}
 	\textit{\textless name="struts.enable.DynamicMethodInvocation" value="false" /\textgreater }
 
 \end{center}
-
 
 
 \subsubsection{System Information Leak: External}
@@ -680,7 +682,7 @@ For example, an "Access Denied" message can reveal that a file or user exists on
 \subsubsection{Password Management: Password in comment}
 \paragraph{}
 Passwords should never be hardcoded, not even in comments.
-The same solution provided in Section~\ref{passwordmanagement} will be sufficient.
+The solution proposed in Section~\ref{passwordmanagement} will be sufficient.
 
 
 \section{Conclusion}
