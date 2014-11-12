@@ -553,10 +553,57 @@ The results from the two scans will also be compared and combined to make a comp
 The tools used in this report \gls{zap} and \gls{for} found a lot of different vulnerabilities, ranging from low to critical severity.
 The only overlapping vulnerability worth mentioning was reflected \gls{xss}.
 Considering the level of severity and that it was discovered multiple times, both with a live attack from \gls{zap} and the discovery of unvalidated input from \gls{for}, this section will focus on how to better protect the system from \gls{xss}.
+One problem with finding this type of flaw in an already deployed application is that to fully mitigate \gls{xss} you need to start at the design and architectural level.
+Choosing the correct libraries and implementing them correctly is much easier to do early in development.
+That being said it is off course possible to implement later, but it is much harder to cover the entire application in later stages.
 \paragraph{}
 
 There are many ways of preventing \gls{xss}, which depends on what framework you are using and how much control you want over it.
+\gls{dhis} uses the spring framework, which allows you escape unwanted input from the user.
+You can specify this on three different levels in your application\cite{preventxss}:
+\begin{itemize}
+\item Global level - in the web.xml file you can specify that all input should be checked for unwanted html or script tags. 
+See Listing \ref{globallevel}.
 
+\item Page level - specify input escaping per page. 
+See Listing \ref{pagelevel}
+\item Form level - specify input escaping on every attribute inside a html form, such as a text field.
+See Listing \ref{formlevel}
+
+\end{itemize}
+
+\begin{lstlisting}[caption=Escape input in web.xml file, label=globallevel]
+
+	<context-param>
+		<param-name>defaultHtmlEscape</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Escape input on a page level, label=pagelevel]
+
+	<spring:htmlEscape defaultHtmlEscape="true" />
+		
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Escape input on a specific input field, label=formlevel]
+
+	 <form:input path="name" htmlEscape="true" />
+	
+\end{lstlisting}
+
+The recommended approach to ensure the entire application is secure is off course applying it on a global level.
+
+\paragraph{•}
+If you do not want to use the standard frameworks it is important to keep a few things in mind.
+Assume that all input is compromised, and use an "accept known good" input validation strategy.
+In other words, use a whitelist of acceptable inputs.
+You should also ensure that you perform input validation at well-defined interfaces in the application.
+Doing so will ensure that even if a component is removed from the application it will still be protected.
+
+\paragraph{•}
+As a final note we recommend that you read the OWASP XSS Prevention Cheatsheet\cite{cheatsheet} as it contain everything you will ever need to know about \gls{xss}. 
 
 \subsection{\gls{zap}}
 
