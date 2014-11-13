@@ -545,29 +545,29 @@ The results from the two scans will also be compared and combined to make a comp
 \textit{We then discuss possible solutions and what we recommend to improve the system.}
 
 \section{Solutions and Recommendations}
-
 \subsection{Comparing the results}
 %Combine the most critical result (XSS)
 %Both Zap and Fortify found this
 %Seems to be a big problem in the application
 The tools used in this report \gls{zap} and \gls{for} found a lot of different vulnerabilities, ranging from low to critical severity.
 The only overlapping vulnerability worth mentioning was reflected \gls{xss}.
-Considering the level of severity and that it was discovered multiple times, both with a live attack from \gls{zap} and the discovery of unvalidated input from \gls{for}, this section will focus on how to better protect the system from \gls{xss}.
+The reason for this is its high level of severity and that it was discovered multiple times.
+It was found with a live attack from \gls{zap} and the discovery of invalidated input from \gls{for}.
+This section will therefore be focusing on how to better protect the system from \gls{xss}.
 One problem with finding this type of flaw in an already deployed application is that to fully mitigate \gls{xss} you need to start at the design and architectural level.
 Choosing the correct libraries and implementing them correctly is much easier to do early in development.
 That being said it is off course possible to implement later, but it is much harder to cover the entire application in later stages.
+
 \paragraph{}
-
 There are many ways of preventing \gls{xss}, which depends on what framework you are using and how much control you want over it.
-\gls{dhis} uses the spring framework, which allows you escape unwanted input from the user.
-You can specify this on three different levels in your application\cite{preventxss}:
+\gls{dhis} uses the spring framework, which allows you to escape unwanted input from the user.
+You can specify this on three different levels in your application \cite{preventxss}:
 \begin{itemize}
-\item Global level - in the web.xml file you can specify that all input should be checked for unwanted html or script tags. 
+	\item Global level - in the web.xml file you can specify that all input should be checked for unwanted html or script tags. 
 See Listing \ref{globallevel}.
-
-\item Page level - specify input escaping per page. 
+	\item Page level - specify input escaping per page. 
 See Listing \ref{pagelevel}
-\item Form level - specify input escaping on every attribute inside a html form, such as a text field.
+	\item Form level - specify input escaping on every attribute inside a html form, such as a text field.
 See Listing \ref{formlevel}
 
 \end{itemize}
@@ -595,43 +595,43 @@ See Listing \ref{formlevel}
 
 The recommended approach to ensure the entire application is secure is off course applying it on a global level.
 
-\paragraph{•}
+\paragraph{}
 If you do not want to use the standard frameworks it is important to keep a few things in mind.
-Assume that all input is compromised, and use an "accept known good" input validation strategy.
+Assume that all input is compromised, and use an ''accept known good" input validation strategy.
 In other words, use a whitelist of acceptable inputs.
 You should also ensure that you perform input validation at well-defined interfaces in the application.
 Doing so will ensure that even if a component is removed from the application it will still be protected.
 
-\paragraph{•}
-As a final note we recommend that you read the OWASP XSS Prevention Cheatsheet\cite{cheatsheet} as it contain everything you will ever need to know about \gls{xss}. 
+\paragraph{}
+As a final note we recommend that you read the OWASP \gls{xss} Prevention Cheatsheet\cite{cheatsheet} as it contain everything you will ever need to know about \gls{xss}. 
 
 \subsection{\gls{zap}}
 
 \subsubsection{Missing header parameters}
-\paragraph{•}
-
-In \ref{cha:part2} we saw that the codebase contained several "Missing header parameter" vulnerabilities, such as \textit{Content-Type} and 
+\paragraph{}
+In \ref{cha:part2} we saw that the codebase contained several ''Missing header parameter" vulnerabilities, such as \textit{Content-Type} and 
 \textit{X-Frame-Options}.
 The solution for this type of flaws is easy to understand, since all you need to do is set the header parameter in you \gls{http} requests.
 \gls{dhis} is using \gls{spring} as there server-side implementation, and the additional framework \gls{spring}-security.
 \gls{spring}-security has all of these header parameters on by default so in theory it should work out of the box.
 One thing that could be the problem is that on certain requests they are specifying a header in the code.
 By doing so they are saying that only the specified header should be included.
-\paragraph{•}
+
+\paragraph{}
 Our recommendation is to review the code which handles request and response from the client and see if you are specifying any headers.
 If so then you have to specify each header manually for that response.\cite{spring-security}
 
 \subsubsection{Password Autocomplete in browser}
-\paragraph{•}
+\paragraph{}
 In many cases there isn't any need to disable password autocomplete, as you need access to the users computer in order to exploit this.
 Nevertheless in some cases this might be necessary, and the way to disable autocomplete is quite easy as you can see in the example below.
 \\
 \textit{ \textless input type="password" name="foo" autocomplete="off" /\textgreater}
 
 \subsubsection{Cookie set without HttpOnly flag}
-\paragraph{•}
+\paragraph{}
 By not setting the HttpOnly flag on your cookies you risk exposing them to malicious \gls{js}.
-Fortunately there is two very easy ways to fix this if you are using \gls{java}, ether programmatically(Listing \ref{httponly}) or declaratively by specifying it in the web.xml config file.\cite{httponly}
+Fortunately there is two very easy ways to fix this if you are using \gls{java}, either programmatically(Listing \ref{httponly}) or declaratively by specifying it in the web.xml config file.\cite{httponly}
 \\
 \begin{lstlisting}[caption=Setting the HttpOnly Flag in Java,label=httponly]
 Cookie cookie = getMyCookie("myCookieName");
@@ -640,22 +640,22 @@ cookie.setHttpOnly(true);
 
 
 \subsubsection{Referrer expose session ID}
-\paragraph{•}
+\paragraph{}
 This is a consequential error caused by the application storing the session ID in the \gls{url}.
 We will discuss how to solve this in section: \nameref{subsec:sessionid}.
 
 \subsubsection{Session ID in \gls{url} rewrite}
 \label{subsec:sessionid}
-\paragraph{•}
+\paragraph{}
 Storing the session ID solely in the \gls{url} is very dangerous as it is easy to hijack it.
 It is recommended that you use a combination between storing it as a cookie and the \gls{url}.
-Because cookies provide multiple security features such as the "secure" attribute which instructs the browser to only send it through secure channels.
+Because cookies provide multiple security features such as the ''secure" attribute which instructs the browser to only send it through secure channels.
 This stops any man-in-the-middle attacks trying to steal the session.\cite{session-management}
 
 \subsubsection{Directory browsing}
-\paragraph{•}
+\paragraph{}
 As discussed in chapter \ref{cha:part2} this could be a false positive, since the application has been tested on a local machine.
-Therefore it is hard to know if this even is a problem when deployed to a real webserver. 
+Therefore it is hard to know if this even is a problem when deployed to a real web-server. 
 To be safe it can be wise to try and browse the directory of a deployed application to see if this is possible.
 If you discover that this is in fact possible, you need to access your .htaccess file which stores this kinds of policies and add the line:
 \\
@@ -663,14 +663,14 @@ If you discover that this is in fact possible, you need to access your .htaccess
 Doing so will turn of directory browsing in your application.
 
 \subsubsection{Application Error disclosure}
-\paragraph{•}
+\paragraph{}
 This is an error which is caused by the fact that you can browse the directory of the application, as all the alerts came from those pages.
 Therefore by solving the Directory browsing problem you will also solve this one.
 
 \subsection{\gls{for}}
 \paragraph{}
 In this section will a solution to the problems mentioned in Section~\ref{sec:hpfortify} be provided.
-Some of the problems have already been discussed, and will therefore be excluded in this section. 
+Some of the problems have already been discussed, and will therefore be excluded in this section(\gls{xss} related issues). 
 
 \subsubsection{Password Management: Hardcoded Password}
 \label{passwordmanagement}
@@ -723,7 +723,7 @@ You should always write error messages with security in mind.
 In listing~\ref{lstsysteminformationleak}, the detail message string of the exception is written to the response object.
 In production environments, turn off detailed error information in favour of brief messages.
 Even brief error messages that do no reveal stack trace or database dumps can potentially aid an attacker. 
-For example, an "Access Denied" message can reveal that a file or user exists on the system.
+For example, an ''Access Denied" message can reveal that a file or user exists on the system.
 
 \begin{lstlisting}[caption=Parts of the method mapException, label=lstsysteminformationleak]
 	
@@ -738,12 +738,38 @@ Passwords should never be hardcoded, not even in comments.
 The solution proposed in Section~\ref{passwordmanagement} will be sufficient.
 
 
-\section{Conclusion}
-\paragraph{}
+\section{Chapter closing words}
 % Our opinion of zap and fortify
-% Overall opinion on the codebase as it is.
 % How the results have been ? 
-%Even though this report has revealed multiple weaknesses of various severity 
+
+\subsection{The result}
+\paragraph{}
+With help from \gls{zap} and \gls{for} we have managed to reveal multiple vulnerabilities within the provided codebase, \gls{dhis}.
+The scans revealed surprisingly many weaknesses, considering the calibre of the application.
+The application is used as health management information system in a whole lot of countries and are being trusted to keep a lot of sensitive data safe and secure.
+However, it doesn't necessarily mean that companies using the system is exposed to all these attacks because they most likely have their own security policies and security mechanisms wrapped around the application. 
+Many vulnerabilities found that is marked as critical, requires an extreme skill in computing in order to even find the vulnerability at all, and then an even greater skill to exploit the vulnerability.
+When the number of vulnerabilities found are that great in number, it should be kind of alarming and concerning.
+Although, a very high number of the faults found are false positives and many of them are duplicated errors.
+
+
+
+\subsection{Our opinion}
+\paragraph{}
+Writing this report has given us a lots of relevant experience in regards of working with security as well as exercise in writing reports.
+Many relevant security related tools have been tried out and it has given us a great start with security oriented software development.
+The writing of the report has been useful since it is highly relevant considering the writing of the masters thesis that lies ahead of us.
+It will also give us a smoother transition when we now are heading into the writing of the thesis.
+The course it self has thought us the importance of integrating security as early as possible in to development cycle.
+In addition, we are now aware of all the different type of attacks that we need to pay attention to.
+Not just how to protect against attacks, but also how to cope with eventual data compromise. 
+
+\paragraph{}
+% Overall opinion on the codebase as it is.
+
+
+
+
 
 \newpage
 
