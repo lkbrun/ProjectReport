@@ -554,6 +554,7 @@ The only overlapping vulnerability worth mentioning was reflected \gls{xss}.
 The reason for this is its high level of severity and that it was discovered multiple times.
 It was found with a live attack from \gls{zap} and the discovery of invalidated input from \gls{for}.
 This section will therefore be focusing on how to better protect the system from \gls{xss}.
+\paragraph{•}
 One problem with finding this type of flaw in an already deployed application is that to fully mitigate \gls{xss} you need to start at the design and architectural level.
 Choosing the correct libraries and implementing them correctly is much easier to do early in development.
 That being said it is off course possible to implement later, but it is much harder to cover the entire application in later stages.
@@ -600,17 +601,18 @@ If you do not want to use the standard frameworks it is important to keep a few 
 Assume that all input is compromised, and use an ''accept known good" input validation strategy.
 In other words, use a whitelist of acceptable inputs.
 You should also ensure that you perform input validation at well-defined interfaces in the application.
-Doing so will ensure that even if a component is removed from the application it will still be protected.
+Doing so will ensure that even if a component is removed from the application will still be protected.
 
 \paragraph{}
-As a final note we recommend that you read the OWASP \gls{xss} Prevention Cheatsheet\cite{cheatsheet} as it contain everything you will ever need to know about \gls{xss}. 
+As a final note we recommend that you take a look at the OWASP \gls{xss} Prevention Cheatsheet\cite{cheatsheet} as it contain everything you will ever need to know about \gls{xss}. 
 
 \subsection{\gls{zap}}
 
 \subsubsection{Missing header parameters}
 \paragraph{}
-In \ref{cha:part2} we saw that the codebase contained several ''Missing header parameter" vulnerabilities, such as \textit{Content-Type} and 
-\textit{X-Frame-Options}.
+In chapter \ref{cha:part2} we saw that the codebase contained several ''Missing header parameter" vulnerabilities, such as \textit{Content-Type}, 
+\textit{X-Frame-Options} and
+\textit{X-Content-Type-Options}.
 The solution for this type of flaws is easy to understand, since all you need to do is set the header parameter in you \gls{http} requests.
 \gls{dhis} is using \gls{spring} as there server-side implementation, and the additional framework \gls{spring}-security.
 \gls{spring}-security has all of these header parameters on by default so in theory it should work out of the box.
@@ -623,8 +625,10 @@ If so then you have to specify each header manually for that response.\cite{spri
 
 \subsubsection{Password Autocomplete in browser}
 \paragraph{}
-In many cases there isn't any need to disable password autocomplete, as you need access to the users computer in order to exploit this.
-Nevertheless in some cases this might be necessary, and the way to disable autocomplete is quite easy as you can see in the example below.
+In many cases, such as social network application and other ``casual" application there isn't any need to disable password autocomplete.
+The security threat it poses isn't worth the loss in user experience which the option of saving passwords provide.
+This is because you need access to the device in order to exploit it.
+Nevertheless in some cases, such as a bank or public services application this might be necessary, and the way to disable autocomplete is quite easy as you can see in the example below.
 \\
 \textit{ \textless input type="password" name="foo" autocomplete="off" /\textgreater}
 
@@ -648,7 +652,7 @@ We will discuss how to solve this in section: \nameref{subsec:sessionid}.
 \label{subsec:sessionid}
 \paragraph{}
 Storing the session ID solely in the \gls{url} is very dangerous as it is easy to hijack it.
-It is recommended that you use a combination between storing it as a cookie and the \gls{url}.
+Therefore it is recommended that you use a combination between storing it as a cookie and the \gls{url}.
 Because cookies provide multiple security features such as the ''secure" attribute which instructs the browser to only send it through secure channels.
 This stops any man-in-the-middle attacks trying to steal the session.\cite{session-management}
 
