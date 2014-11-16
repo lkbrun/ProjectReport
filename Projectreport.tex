@@ -77,7 +77,8 @@ The tools and frameworks help software developers to find security breaches with
 Throughout this report will two common tools be introduced, and tested on an actual codebase.
 
 \paragraph{}
-We will be using the \gls{dhis} as codebase. \gls{dhis} is a flexible, web-based open-source information system. 
+We will be using the \gls{dhis} as codebase. 
+\gls{dhis} is a flexible, web-based open-source information system. 
 The system has visualization features such as \gls{gis}, charts and pivot tables. You can read more about the system on their website \cite{dhis2-homepage}.
 
 
@@ -91,12 +92,12 @@ Giving this report to the company responsible for the codebase, will hopefully g
 
 \chapter{Installation of tools and code base}
 \label{cha:part2}
-\textit{In this chapter will more concise details about the two tools be described, and go deeper into the provided codebase.}
+\textit{In this chapter will a more concise description of the tools be given, and provide a deeper understanding of the codebase.}
 
 \section{OWASP Zed Attack Proxy}
 \paragraph{}
 \gls{zap} is an integrated penetration testing tool used for finding flaws and vulnerabilities in web applications. 
-\gls{zap} is an excellent tool for both beginners and security experts as it provides an easy to use graphical interface as well as a more in-depth command line.
+It is an excellent tool for both beginners and security experts as it provides an easy to use graphical interface as well as a more in-depth command line.
 
 \paragraph{}
 This section will cover some of the features that \gls{zap} provides, and see how it can be beneficial.
@@ -124,7 +125,7 @@ As a result can you optimize the analysis by doing manual testing of the applica
 \end{figure}
 
 \subsubsection{Passive and Active scanner}
-The documentation for \gls{zap} states that you should only use \gls{zap} on applications you have permission to do so, as you are actually attacking the application. 
+The documentation for \gls{zap} states that you should only use it on applications you have permission to do so, as you are actually attacking the application. 
 This does not include the passive scanner. 
 This is a tool that will run in the background as you browse the application, only listening to the network traffic and not attacking.
 
@@ -159,8 +160,8 @@ It is a great tool to make sure that you cover the entire application.
 \paragraph{}
 \gls{zap} is great tool with many helpful features, but that doesn't mean that you can rely solely on the automatic scanners it provides. 
 By using \gls{zap} together with manual penetration testing can you achieve the best result and the best coverage. 
-Figure~\ref{fig:zapscreenshot}  shows the result of running \gls{zap} on the \gls{dhis} application. You can read more about \gls{zap} here. \cite{zap-documentation,zap-homepage}
-
+Figure~\ref{fig:zapscreenshot}  shows the result of running \gls{zap} on the \gls{dhis} application. 
+You can read more about \gls{zap} here. \cite{zap-documentation,zap-homepage}
 
 \begin{figure}[h]
     \centering
@@ -169,37 +170,36 @@ Figure~\ref{fig:zapscreenshot}  shows the result of running \gls{zap} on the \gl
     \label{fig:zapscreenshot}
 \end{figure}
 
-
 \newpage
 
 \section{HP Fortify}
 \label{sectionfortifytool}
 \paragraph{}
-HP Fortify assess, assure and protect enterprise software and applications from security vulnerabilities.
-Providing complete security testing and management through static and dynamic testing technologies. 
+\gls{for} assess, assure and protect enterprise software and applications from security vulnerabilities.
+It provides complete security testing and management through static and dynamic testing technologies. 
 Or, by repeatable and auditable secure behaviours, over the course of a software application life cycle. 
 A flexible delivery model allows security groups to get started quickly and scale in response to business changes while protecting their assets in application security. 
-You can read more about HP Fortify here. \cite{fortify-software-wiki, fortify-software-homepage-features} 
+You can read more about HP Fortify here \cite{fortify-software-wiki, fortify-software-homepage-features}.
 
 \subsection{Installation and Experience}
 \paragraph{}
 Installing the HP Fortify plug in for Eclipse is a straightforward process. 
-First of all, must the HP Fortify software be downloaded and installed.
-\gls{uib} provided access to their \gls{svn} repository where the HP Fortify software tool could be downloaded.  
+First of all, the \gls{for} software must be downloaded and installed.
+\gls{uib} provided access to their \gls{svn} repository where the \gls{for} software tool could be downloaded.  
 The download includes an installation wizard. 
 The default installation covers our needs for this project, however, you can specify specific configurations throughout the wizard. \cite{installation-usage-guide}
 
 \paragraph{}
-There exists a HP Fortify plug-in for Eclipse which is easy and convenient to use.
+There exists a \gls{for} plug-in for Eclipse which is easy and convenient to use.
 Eclipse has a feature called install new software, where a wizard will take you through the plug-in installation steps.
-There you have to specify the installation directory of HP Fortify meaning the HP Fortify software you installed in the previous step.
+There you have to specify the installation directory of \gls{for} which is where you installed the \gls{for} software in the previous step.
 Here you will have some different configuration settings, for instance what features to install.
-After completion of the installation, a simple restart of Eclipse is needed and the menu bar will then include the HP Fortify menu shown in Figure~\ref{fig:fortifymenuscreenshot}. \cite{installation-usage-guide}
+After completion of the installation, a simple restart of Eclipse is needed and the menu bar will then include the \gls{for} menu shown in Figure~\ref{fig:fortifymenuscreenshot}. \cite{installation-usage-guide}
 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.45]{images/fortifymenu-sc.png}
-    \caption{After the installation and restart of Eclipse will the HP Fortify menu show in the menu bar of Eclipse.}
+    \caption{After the installation and restart of Eclipse, the HP Fortify menu option will show up in the menu bar of Eclipse.}
     \label{fig:fortifymenuscreenshot}
 \end{figure}
 
@@ -214,7 +214,7 @@ The analysis plug-in enables you to initiate a \gls{sca} scan and analysis, view
 This component makes it possible to initiate a \gls{sca} scan and analysis of your \gls{java} source code.
 You can scan entire projects or specify a single package or file that you want to scan. 
 Although the plug-in automatically includes all source files from dependencies. 
-A scan can easily be started by selecting the desired project, package or file and start the scan from the HP Fortify menu.
+A scan can easily be started by selecting the desired project, package or file and start the scan from the \gls{for} menu.
 The result of the scan will be shown in a new tab in Eclipse, called the \gls{sca} Analysis Result view. \cite{installation-usage-guide}
 
 \paragraph{}
@@ -256,14 +256,14 @@ For instance, a summary tab displaying high-level information about the project 
 This component is responsible for auditing and analysis of the result.
 It is possible to open an existing audit and continue your work.
 You can even open the analysis for a project created by someone else on another machine.
-If necessary, can you generate a new result from the audit. \cite{installation-usage-guide}
+If necessary, you can generate a new result from the audit. \cite{installation-usage-guide}
 
 \paragraph{}
 The Analysis Evidence view is mentioned in Section~\ref{analyseevidence}. 
 It is possible to display the Analyse Evidence view here as well which gives a more detailed reason of a particular issue.
 In addition, can you do various of search queries that can contain, be equal/not equal to a text.
 You can use \gls{regex} or search for number range and even more. 
-Finally can you generate a report based on the analysis data that will show the result of analysis. \cite{installation-usage-guide}
+Finally, you can generate a report based on the analysis data that will show the result of analysis. \cite{installation-usage-guide}
 
 
 \section{\gls{dhis}}
@@ -296,7 +296,7 @@ First of all we had to add a new environment variable which specified the locati
 After this, the build was successful, but running the application failed due an OutOfMemoryException. 
 This means that the web server didn't have access to enough memory to successfully run the application. 
 We fixed this by adding two more environment variables which specified the allocated memory for the \gls{jre} and for \gls{maven}.
-Finally the application ran successfully and the project could be built as an Eclipse project and imported into Eclipse where further analysis could be done using HP Fortify.
+Finally, the application ran successfully and the project could be built as an Eclipse project and imported into Eclipse where further analysis could be done using \gls{for}.
 
 
 
@@ -310,12 +310,12 @@ Finally the application ran successfully and the project could be built as an Ec
 \paragraph{}
 \gls{zap} offers different features which together creates a list of the potential issues in the application. 
 As discussed in Chapter~\ref{cha:part2}, the best approach would be to manually use and test the application relying on the intersecting proxy and the passive scanner to do the groundwork. 
-When this is done will the spider and the active scanner make sure that the entire application is covered as well as do some automated penetration testing. 
+When this is done the spider and the active scanner will make sure that the entire application is covered as well as do some automated penetration testing. 
 You can specify different scanner rules to get a more specialized analysis that suits your needs.
 
 \paragraph{}
 The results will be categorized into security threat levels as shown in figure \ref{fig:zapalerts}.
-Focus of this report will mostly be on the higher alert levels, but the lower threat will be considered as well.
+Focus of this report will mostly be on the higher alert levels, but the lower threats will also be considered.
 The results will be further discussed in section \ref{sec:zapresult-overview}.
 
 \begin{figure}[h]
@@ -354,16 +354,16 @@ Ranking from lowest to highest alert level we will inspect each of the different
 This alert is pretty straight forward.
 It only means that the \gls{http} response coming from the server should include the X-Frame-Options header to protect against 'Clickjacking'\cite{clickjacking} attacks.
 Clickjacking is a form of hijacking attack, where the attacker hides malicious buttons or links on top the actual webpage.
-Users is then tricked into clicking them instead of their intended target, thus hijacking there click.
+Users is then tricked into clicking them instead of their intended target, thus hijacking their click.
 The developers of the codebase doesn't seem to know about this potential exploit as every response from the server comes without this header.
 
 \subsubsection{X-Content-Type-Options header missing (Low)}
 \paragraph{}
-As the previous issue mentioned, is this issue also about setting a header parameter.
+As the previous issue mentioned, this issue is also about setting a header parameter.
 However, in this case should the 'X-Content-Type-Options' be set to 'nosniff' \cite{no-sniff}. 
 This stops older versions of Chrome and Internet Explorer from performing \gls{mime}-sniffing. 
-\gls{mime}-sniffing is the browser trying to determine the MIME type of the current content. 
-This is harmless as itself, but opens up to some security vulnerabilities by confusing the \gls{mime}-sniffing algorithm into interpreting the data the wrong way and not correctly assigning the content type.
+\gls{mime}-sniffing is the browser trying to determine the \gls{mime} type of the current content. 
+This is harmless by itself, but opens up to some security vulnerabilities by confusing the \gls{mime}-sniffing algorithm into interpreting the data the wrong way and not correctly assigning the content type.
 
 
 \subsubsection{Web Browser \gls{xss} Protection Not Enabled (Low)}
@@ -374,7 +374,7 @@ More about this and other common \gls{http} header parameters can be found here\
 \subsubsection{Referrer expose session ID (Low)}
 \paragraph{}
 The analysis discovered multiple links leading away from the application and into an external host.
-This in combination with having the session ID in the \gls{url}(will talk more about this later) can potentially be dangerous as the session ID may be disclosed in the 'referrer' header parameter in the request to the external host.
+This in combination with having the session ID in the \gls{url} can potentially be dangerous as the session ID may be disclosed in the 'referrer' header parameter in the request to the external host.
 The 'referrer' parameter contains the \gls{url} where the request was coming from, meaning that the session ID is exposed inside the request.
 
 \subsubsection{Password Autocomplete in browser (Low)}
@@ -394,7 +394,7 @@ In other words, the browser doesn't have to guess the content type and possibly 
 
 \subsubsection{Session ID in \gls{url} rewrite (Medium)}
 \paragraph{}
-The application stores the session ID in the \gls{url}, which as we discussed previously can be exposed through the referrer header parameter when accessing a different host from your application \cite{url-sessionid-risks}.
+The application stores the session ID in the \gls{url}, which as we discussed previously, can be exposed through the referrer header parameter when accessing a different host from your application \cite{url-sessionid-risks}.
 
 \subsubsection{Directory browsing (Medium)}
 \paragraph{}
@@ -404,16 +404,16 @@ This may reveal backup source files and other hidden files which contains sensit
 \subsubsection{Application Error disclosure (Medium)}
 \paragraph{}
 It is possible that the application contains error messages which may disclose implementation details. 
-In this case this alert is closely related to the previous section, as this alert is triggered by the fact that you can traverse the directory listing. 
+In this case the alert is closely related to the previous section, as this alert is triggered by the fact that you can traverse the directory listing. 
 The error may be a configuration problem or perhaps it only occurs because we are running the application locally.
 
 \subsubsection{Cross-Site Scripting - Reflected (High)}
 \paragraph{}
 The last and only high level alert is a reflected \gls{xss} vulnerability. 
-Reflected \gls{xss} means that the attack is not stored in the application itself, but rather in a URL or \gls{http} header parameter.
-So it can only be triggered by a user which opens a maliciously crafted link or a third-party web page.
+Reflected \gls{xss} means that the attack is not stored in the application itself, but rather in a \gls{url} or \gls{http} header parameter.
+It can therefore only be triggered by a user which opens a maliciously crafted link or a third-party web page.
 \gls{zap} managed to inject a small script on six different occasions when scanning the application.
-The application used the \gls{url} as part of the application on several places, which is where it could be taken advantage of.
+The application used the \gls{url} as part of the application on multiple places, which is where it could be exploited.
 \gls{xss} attacks can be very harmful, and in a worst case scenario an attacker can hijack the users account information without the user having any idea what happened.
 This is a very serious vulnerability and needs to be fixed as soon as possible.
 
@@ -425,14 +425,14 @@ This is a very serious vulnerability and needs to be fixed as soon as possible.
 As mentioned in Chapter~\ref{sectionfortifytool}, \gls{for} is an automated static analysis tool for exposing security vulnerabilities in software applications. 
 The process of automated testing is an important part of securing software as they tend to find security issues that manual code reviews simply doesn't reveal.
 Running the \gls{for} \gls{sca} scan on the entire codebase found over ten thousand security issues where over hundred of them were marked as critical.
-In addition, does \gls{for} have some problems with analysing large amount of source code as it requires a whole lot of memory.
+In addition, \gls{for} has some problems with analysing large amount of source code as it requires a whole lot of memory.
 Therefore has the focus been narrowed to a smaller part of the codebase in order to provide a more comprehensive and complete analysis.
 
 \subsection{Results Overview}
 \paragraph{}
-The \gls{sca} scan has primarily been limited to the module called dhis-web-mobile. In Eclipse you can right clicking the project and then clicking on analyse project to start the \gls{sca} scan.
-During scan completion will the perspective change automatically to \gls{for} Audit perspective.
-The result of the scan will shown up in this perspective, and in figure~\ref{fig:issuesfoundmobilemodule} you can see what the scan of the web-module revealed:
+The \gls{sca} scan has primarily been limited to the module called dhis-web-mobile. In Eclipse you can right click the project and then click on analyse project to start the \gls{sca} scan.
+During scan completion the perspective will change automatically to \gls{for} Audit perspective.
+The result of the scan will shown up in this perspective, and in figure~\ref{fig:issuesfoundmobilemodule} you can see what the scan of the web-module found:
 
 \begin{figure}[ht]
 \RawFloats
@@ -483,7 +483,7 @@ The code presented in listing~\ref{hardcodedpassword} is found in DatabaseAutoma
 \subsubsection{Cross-Site Scripting: Reflected (Critical)}
 \paragraph{}
 A method sends invalidated data to a web browser which can result in execution of malicious code.
-This kind of attack happen when data from an untrusted source enters an application where the untrusted source is a web request.
+This kind of attack happens when data from an untrusted source enters an application where the untrusted source is a web request.
 An untrusted source basically means every user of the application.
 The data that is sent with the request is not being validated properly which makes it possible to execute scripts on the server or the database.
 You should always validate data provided by an untrusted source.
@@ -519,7 +519,7 @@ Developers that are not aware of this feature can inadvertently expose business 
 \paragraph{}
 The method mapException catches an exception that might reveal system data or debugging information. 
 The information could help an adversary form an attack plan.
-When the exception is thrown, might data about the system be revealed. 
+When the exception is thrown data about the system  might be revealed. 
 The revealed data can for example be information about the operating system, full pathnames, the existence of user names, or locations of configuration files, which could help an attacker plan an attack.
 Too informatively error messages could tell attackers precisely what kind of attacks the application is vulnerable to.
 
@@ -554,10 +554,11 @@ The only overlapping vulnerability worth mentioning was reflected \gls{xss}.
 The reason for this is its high level of severity and that it was discovered multiple times.
 It was found with a live attack from \gls{zap} and the discovery of invalidated input from \gls{for}.
 This section will therefore be focusing on how to better protect the system from \gls{xss}.
-\paragraph{•}
+
+\paragraph{}
 One problem with finding this type of flaw in an already deployed application is that to fully mitigate \gls{xss} you need to start at the design and architectural level.
 Choosing the correct libraries and implementing them correctly is much easier to do early in development.
-That being said it is off course possible to implement later, but it is much harder to cover the entire application in later stages.
+That being said, it is off course possible to implement later, but it is much harder to cover the entire application in later stages.
 
 \paragraph{}
 There are many ways of preventing \gls{xss}, which depends on what framework you are using and how much control you want over it.
@@ -594,14 +595,14 @@ See Listing \ref{formlevel}
 	
 \end{lstlisting}
 
-The recommended approach to ensure the entire application is secure is off course applying it on a global level.
+The recommended approach to ensure the entire application is of course applying it on a global level.
 
 \paragraph{}
 If you do not want to use the standard frameworks it is important to keep a few things in mind.
 Assume that all input is compromised, and use an ''accept known good" input validation strategy.
-In other words, use a whitelist of acceptable inputs.
+In other words, use a white-list of acceptable inputs.
 You should also ensure that you perform input validation at well-defined interfaces in the application.
-Doing so will ensure that even if a component is removed from the application will still be protected.
+Doing so will ensure that components removed from the application still will be protected.
 
 \paragraph{}
 As a final note we recommend that you take a look at the OWASP \gls{xss} Prevention Cheatsheet\cite{cheatsheet} as it contain everything you will ever need to know about \gls{xss}. 
@@ -610,12 +611,10 @@ As a final note we recommend that you take a look at the OWASP \gls{xss} Prevent
 
 \subsubsection{Missing header parameters}
 \paragraph{}
-In chapter \ref{cha:part2} we saw that the codebase contained several ''Missing header parameter" vulnerabilities, such as \textit{Content-Type}, 
-\textit{X-Frame-Options} and
-\textit{X-Content-Type-Options}.
+In chapter \ref{cha:part2} we saw that the codebase contained several ''Missing header parameter" vulnerabilities, such as \textit{Content-Type}, \textit{X-Frame-Options} and \textit{X-Content-Type-Options}.
 The solution for this type of flaws is easy to understand, since all you need to do is set the header parameter in you \gls{http} requests.
-\gls{dhis} is using \gls{spring} as there server-side implementation, and the additional framework \gls{spring}-security.
-\gls{spring}-security has all of these header parameters on by default so in theory it should work out of the box.
+\gls{dhis} is using \gls{spring} as the server-side implementation, and the additional framework \gls{spring}-security.
+\gls{spring}-security has all of these header parameters toggled on by default so in theory it should work out of the box.
 One thing that could be the problem is that on certain requests they are specifying a header in the code.
 By doing so they are saying that only the specified header should be included.
 
@@ -628,7 +627,7 @@ If so then you have to specify each header manually for that response.\cite{spri
 In many cases, such as social network application and other ``casual" application there isn't any need to disable password autocomplete.
 The security threat it poses isn't worth the loss in user experience which the option of saving passwords provide.
 This is because you need access to the device in order to exploit it.
-Nevertheless in some cases, such as a bank or public services application this might be necessary, and the way to disable autocomplete is quite easy as you can see in the example below.
+Nevertheless, in some cases such as a bank or public services application this might be necessary, and the way to disable autocomplete is quite easy as you can see in the example below.
 \\
 \textit{ \textless input type="password" name="foo" autocomplete="off" /\textgreater}
 
@@ -681,7 +680,8 @@ Some of the problems have already been discussed, and will therefore be excluded
 \paragraph{}
 As mentioned, it is never a good idea to hardcode a password for a number of reasons.
 Passwords should never be hardcoded and should generally be obfuscated and managed in external sources. 
-The solution is simple, remove the hardcoded password from the source code and retrieve the password another way, e.g from a database.
+The solution is simple.
+Remove the hardcoded password from the source code and retrieve the password another way, e.g from a database.
 
 \subsubsection{Shared Sink: Open Redirect}
 \paragraph{}
@@ -693,7 +693,7 @@ Meaning that this a false positive problem found by \gls{for}.
 \subsubsection{Injection: Log Forging}
 \paragraph{}
 Log files are used to store history of application events for later review, statistics gathering, or debugging.
-In listing~\ref{lstlogforging}, this is the case.
+In listing~\ref{lstlogforging} from the AccountController class, this is the case.
 The variable inviteUserName is a request parameter from method invocation. 
 Checking that the variable is not null and not empty is the only type of validation that is done. 
 One way of prevent log forging is with indirection.
@@ -751,12 +751,10 @@ The solution proposed in Section~\ref{passwordmanagement} will be sufficient.
 With help from \gls{zap} and \gls{for} we have managed to reveal multiple vulnerabilities within the provided codebase, \gls{dhis}.
 The scans revealed surprisingly many weaknesses, considering the calibre of the application.
 The application is used as health management information system in a whole lot of countries and are being trusted to keep a lot of sensitive data safe and secure.
-However, it doesn't necessarily mean that companies using the system is exposed to all these attacks because they most likely have their own security policies and security mechanisms wrapped around the application. 
+However, it doesn't necessarily mean that companies using the system is exposed to all these attacks since they most likely have their own security policies and security mechanisms wrapped around the application. 
 Many vulnerabilities found that is marked as critical, requires an extreme skill in computing in order to even find the vulnerability at all, and then an even greater skill to exploit the vulnerability.
 When the number of vulnerabilities found are that great in number, it should be kind of alarming and concerning.
 Although, a very high number of the faults found are false positives and many of them are duplicated errors.
-
-
 
 \subsection{Our opinion}
 \paragraph{}
@@ -764,15 +762,9 @@ Writing this report has given us a lots of relevant experience in regards of wor
 Many relevant security related tools have been tried out and it has given us a great start with security oriented software development.
 The writing of the report has been useful since it is highly relevant considering the writing of the masters thesis that lies ahead of us.
 It will also give us a smoother transition when we now are heading into the writing of the thesis.
-The course it self has thought us the importance of integrating security as early as possible in to development cycle.
+The course it self has thought us the importance of integrating security as early as possible into development cycle.
 In addition, we are now aware of all the different type of attacks that we need to pay attention to.
-Not just how to protect against attacks, but also how to cope with eventual data compromise. 
-
-\paragraph{}
-% Overall opinion on the codebase as it is.
-
-
-
+Not just how to protect against attacks, but also how to cope with eventual data compromise.
 
 
 \newpage
